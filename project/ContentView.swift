@@ -8,17 +8,45 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    let appOrange: Color = Color(red: 224/255, green: 132/255, blue: 98/255)
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        TabView {
+            HomeView()
+            .tabItem {
+                Image(systemName: "house.fill")
+                Text("Home")
+            }
+            .padding(.bottom, 10)
+        
+            Boekje()
+            .tabItem {
+                Image(systemName: "book.pages.fill")
+                Text("Recepten")
+            }
+            .padding(.bottom, 10)
+        
+            HomeView()
+            .tabItem {
+                Image(systemName: "basket.fill")
+                Text("Boodschappen")
+            }
+            .padding(.bottom, 10)
+        
+            Boekje()
+            .tabItem {
+                Image(systemName: "info.circle.fill")
+                Text("Gezond")
+            }
+            .padding(.bottom, 10)
         }
-        .padding()
+        .accentColor(appOrange)
     }
 }
 
-#Preview {
-    ContentView()
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
+    }
 }

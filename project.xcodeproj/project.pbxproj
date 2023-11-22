@@ -11,6 +11,10 @@
 		E3163B002B0DF69C009CAA9D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3163AFF2B0DF69C009CAA9D /* ContentView.swift */; };
 		E3163B022B0DF69F009CAA9D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E3163B012B0DF69F009CAA9D /* Assets.xcassets */; };
 		E3163B052B0DF69F009CAA9D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E3163B042B0DF69F009CAA9D /* Preview Assets.xcassets */; };
+		E3163B0E2B0DFB99009CAA9D /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3163B0D2B0DFB99009CAA9D /* Home.swift */; };
+		E3163B102B0DFFB4009CAA9D /* Receptenboekje.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3163B0F2B0DFFB4009CAA9D /* Receptenboekje.swift */; };
+		E385D5752B0E2BF400494866 /* ReceptenModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E385D5742B0E2BF400494866 /* ReceptenModel.swift */; };
+		E385D5772B0E2E3200494866 /* CreateRecept.swift in Sources */ = {isa = PBXBuildFile; fileRef = E385D5762B0E2E3200494866 /* CreateRecept.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +23,10 @@
 		E3163AFF2B0DF69C009CAA9D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		E3163B012B0DF69F009CAA9D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E3163B042B0DF69F009CAA9D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		E3163B0D2B0DFB99009CAA9D /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
+		E3163B0F2B0DFFB4009CAA9D /* Receptenboekje.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Receptenboekje.swift; sourceTree = "<group>"; };
+		E385D5742B0E2BF400494866 /* ReceptenModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceptenModel.swift; sourceTree = "<group>"; };
+		E385D5762B0E2E3200494866 /* CreateRecept.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRecept.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +61,9 @@
 			children = (
 				E3163AFD2B0DF69C009CAA9D /* projectApp.swift */,
 				E3163AFF2B0DF69C009CAA9D /* ContentView.swift */,
+				E3163B132B0E23AD009CAA9D /* Home */,
+				E3163B122B0E23A2009CAA9D /* Boekje */,
+				E3163B142B0E23C7009CAA9D /* Boodschappen */,
 				E3163B012B0DF69F009CAA9D /* Assets.xcassets */,
 				E3163B032B0DF69F009CAA9D /* Preview Content */,
 			);
@@ -65,6 +76,31 @@
 				E3163B042B0DF69F009CAA9D /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		E3163B122B0E23A2009CAA9D /* Boekje */ = {
+			isa = PBXGroup;
+			children = (
+				E3163B0F2B0DFFB4009CAA9D /* Receptenboekje.swift */,
+				E385D5762B0E2E3200494866 /* CreateRecept.swift */,
+				E385D5742B0E2BF400494866 /* ReceptenModel.swift */,
+			);
+			path = Boekje;
+			sourceTree = "<group>";
+		};
+		E3163B132B0E23AD009CAA9D /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				E3163B0D2B0DFB99009CAA9D /* Home.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		E3163B142B0E23C7009CAA9D /* Boodschappen */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Boodschappen;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -137,8 +173,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E385D5772B0E2E3200494866 /* CreateRecept.swift in Sources */,
 				E3163B002B0DF69C009CAA9D /* ContentView.swift in Sources */,
+				E3163B102B0DFFB4009CAA9D /* Receptenboekje.swift in Sources */,
 				E3163AFE2B0DF69C009CAA9D /* projectApp.swift in Sources */,
+				E385D5752B0E2BF400494866 /* ReceptenModel.swift in Sources */,
+				E3163B0E2B0DFB99009CAA9D /* Home.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
