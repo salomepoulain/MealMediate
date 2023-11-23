@@ -30,88 +30,27 @@ struct Boekje: View {
                 LazyVGrid(columns: adaptiveColumns, spacing: 20) {
                     
                     ForEach(items) { item in
-                        ZStack {
-                            
-                            // tile
-                            Rectangle()
-                                .frame(width: 165, height: 210)
-                                .foregroundColor(appYellow)
-                                // geef menu om te wijzigen of verwijderen
-                                .contextMenu {
-                                    Button(action: {
-                                        // TODO
-                                        print("Other menu item")
-                                    }) {
-                                        Label("Wijzig", systemImage: "pencil")
-                                    }
-
-                                    Button(role: .destructive) {
-                                        withAnimation {
-                                            context.delete(item)
-                                        }
-                                    } label: {
-                                        Label("Verwijder", systemImage: "trash.fill")
-                                    }
+                        TileView(tile_naam: item.naam, tile_gezond: item.isGezond, tile_vega: item.isMakkelijk, tile_tijd: item.tijd)
+                            .contextMenu {
+                                // button 1
+                                Button(action: {
+                                    // TODO
+                                    print("Other menu item")
+                                }) {
+                                    Label("Wijzig", systemImage: "pencil")
                                 }
-                                .cornerRadius(10)
-                                .shadow(color: Color.gray.opacity(0.5), radius: 3, x: 0, y: 2)
-                                                                    
-                            
-                            // recept tile
-                            VStack(alignment: .leading) {
                                 
-                                Rectangle()
-                                    .frame(width: 170, height: 130)
-                                    .foregroundColor(Color.green)
-                                    .clipShape(RoundedCorner(radius: 10, corners: [.topLeft, .topRight]))
-                                
-                                Spacer()
-                                
-                                Text(item.naam)
-                                    .lineLimit(2)
-                                    .truncationMode(.tail)
-                                    .font(.system(size: 14))
-                                    .bold()
-                                
-                                Spacer()
-                                
-                                // onderkant informatie
-                                HStack {
-                                    if item.isGezond {
-                                        HStack {
-                                            Image(systemName: "carrot.fill")
-                                                .foregroundColor(.green)
-                                        }
-                                    } else {
-                                        HStack {
-                                            Image(systemName: "carrot")
-                                                .foregroundColor(.red)
-                                        }
+                                //button 2
+                                Button(role: .destructive) {
+                                    withAnimation {
+                                        context.delete(item)
                                     }
-                                    
-                                    if item.isMakkelijk {
-                                        HStack {
-                                            Image(systemName: "figure.walk")
-                                                .foregroundColor(.green)
-                                        }
-                                    } else {
-                                        HStack {
-                                            Image(systemName: "figure.gymnastics")
-                                                .foregroundColor(.red)
-                                        }
-                                    }
-                                    
-                                    Spacer()
-                                    
-                                    HStack {
-                                        Text("\(item.tijd) min")
-                                            .font(.system(size: 14))
-                                            .lineLimit(1)
-                                    }
+                                } label: {
+                                    Label("Delete", systemImage: "trash.fill")
                                 }
                             }
-                            .padding()
-                        }
+                            .clipShape(RoundedRectangle(cornerRadius: 12))
+                            .shadow(radius: 5)
                     }
                     
                 }
@@ -139,15 +78,6 @@ struct Boekje: View {
     }
 }
 
-struct RoundedCorner: Shape {
-    var radius: CGFloat = .infinity
-    var corners: UIRectCorner = .allCorners
-
-    func path(in rect: CGRect) -> Path {
-        let path = UIBezierPath(roundedRect: rect, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
-        return Path(path.cgPath)
-    }
-}
 
 #Preview {
     Boekje()

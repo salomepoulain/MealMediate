@@ -8,9 +8,22 @@
 import SwiftUI
 
 struct TileView: View {
+    
+    var tile_naam: String
+    var tile_gezond: Bool
+    var tile_vega: Bool
+    var tile_tijd: String
+    
+    init(tile_naam: String, tile_gezond: Bool, tile_vega: Bool, tile_tijd: String) {
+        self.tile_naam = tile_naam
+        self.tile_gezond = tile_gezond
+        self.tile_vega = tile_vega
+        self.tile_tijd = tile_tijd
+    }
+    
     var body: some View {
         VStack {
-            // Top half: Green rectangle
+            // Top half: Image
             Rectangle()
                 .fill(Color.green)
                 .frame(width: 170, height: 130)
@@ -19,12 +32,12 @@ struct TileView: View {
             VStack(){
             
                 HStack{
-                    Text("Pasta pesto")
+                    Text(tile_naam)
                         .foregroundColor(.black)
                         .lineLimit(2)
                         .truncationMode(.tail)
                         .bold()
-                        .font(.system(size: 16))
+                        .font(.system(size: 14))
                         
                     Spacer()
                 }
@@ -32,18 +45,26 @@ struct TileView: View {
                 Spacer()
                 
                 HStack{
-                    Image(systemName: "carrot.fill")
-                        .foregroundColor(.gray)
                     
-                    Image(systemName: "carrot.fill")
-                        .foregroundColor(.gray)
+                    if tile_gezond == true {
+                        Image("apple")
+                            .foregroundColor(.green)
+                    } else {
+                        Image("apple")
+                            .foregroundColor(.red)
+                    }
                     
-                    Image(systemName: "carrot.fill")
-                        .foregroundColor(.gray)
+                    if tile_vega == true {
+                        Image(systemName: "leaf.fill")
+                            .foregroundColor(.green)
+                    } else {
+                        Image(systemName: "leaf.fill")
+                            .foregroundColor(.red)
+                    }
                     
                     Spacer()
                     
-                    Text("230 min")
+                    Text("\(tile_tijd) min")
                         .font(.system(size: 14))
                 }
             }
@@ -52,20 +73,36 @@ struct TileView: View {
         }
         .frame(width: 170, height: 210)
         .background(Color.white)
+        .contentShape(.contextMenuPreview, RoundedRectangle(cornerRadius: 12))
+    }
+}
+
+
+#Preview {
+    TileView(tile_naam: "kip samurai", tile_gezond: true, tile_vega: false, tile_tijd: "120")
         .contextMenu {
+            // button 1
             Button(action: {
                 // TODO
                 print("Other menu item")
             }) {
                 Label("Wijzig", systemImage: "pencil")
             }
+            
+            //button 2
+            Button(role: .destructive) {
+                
+            } label: {
+                Label("Delete", systemImage: "trash.fill")
+            }
         }
-        .cornerRadius(10)
-        .shadow(radius: 4, x: 0, y: 2)
-    }
-}
+        .clipShape(RoundedRectangle(cornerRadius: 12))
+        .shadow(radius: 5)
+        
+        
+        
+        
+        
 
-
-#Preview {
-    TileView()
+        
 }

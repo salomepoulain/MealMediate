@@ -65,8 +65,8 @@
 				E3163AFF2B0DF69C009CAA9D /* ContentView.swift */,
 				E3163B132B0E23AD009CAA9D /* Home */,
 				E3163B122B0E23A2009CAA9D /* Boekje */,
+				E385D5742B0E2BF400494866 /* ReceptenModel.swift */,
 				E3163B142B0E23C7009CAA9D /* Boodschappen */,
-				E3163B012B0DF69F009CAA9D /* Assets.xcassets */,
 				E3163B032B0DF69F009CAA9D /* Preview Content */,
 			);
 			path = project;
@@ -75,6 +75,7 @@
 		E3163B032B0DF69F009CAA9D /* Preview Content */ = {
 			isa = PBXGroup;
 			children = (
+				E3163B012B0DF69F009CAA9D /* Assets.xcassets */,
 				E3163B042B0DF69F009CAA9D /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
@@ -86,7 +87,6 @@
 				E3163B0F2B0DFFB4009CAA9D /* Receptenboekje.swift */,
 				E385D5762B0E2E3200494866 /* CreateRecept.swift */,
 				E3D995B32B0EA00D00324865 /* Views */,
-				E385D5742B0E2BF400494866 /* ReceptenModel.swift */,
 			);
 			path = Boekje;
 			sourceTree = "<group>";
