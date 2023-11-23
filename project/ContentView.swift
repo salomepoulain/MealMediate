@@ -18,28 +18,24 @@ struct ContentView: View {
                 Image(systemName: "house.fill")
                 Text("Home")
             }
-            .padding(.bottom, 10)
         
             Boekje()
             .tabItem {
                 Image(systemName: "book.pages.fill")
                 Text("Recepten")
             }
-            .padding(.bottom, 10)
         
             HomeView()
             .tabItem {
                 Image(systemName: "basket.fill")
                 Text("Boodschappen")
             }
-            .padding(.bottom, 10)
         
             Boekje()
             .tabItem {
                 Image(systemName: "info.circle.fill")
                 Text("Gezond")
             }
-            .padding(.bottom, 10)
         }
         .accentColor(appOrange)
     }

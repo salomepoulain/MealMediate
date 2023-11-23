@@ -14,90 +14,110 @@ struct Boekje: View {
     @Environment(\.modelContext) var context
     
     @State private var showCreate = false
-    @State private var isMenuVisible = false
     @Query private var items: [ReceptItem]
+    
+    private let adaptiveColumns = [
+        GridItem(.adaptive(minimum: 165))
+    ]
+    
+    @State private var isContextMenuVisible = false
     
     var body: some View {
         
         NavigationStack {
-            List {
-                ForEach(items) { item in
-                    // recept tile
-                    VStack(alignment: .leading) {
-                        
-                        HStack {
-                            // naam gerecht
-                            Text(item.naam)
-                                .bold()
+        
+            ScrollView {
+                LazyVGrid(columns: adaptiveColumns, spacing: 20) {
+                    
+                    ForEach(items) { item in
+                        ZStack {
                             
-                            Spacer()
-                            
-                            // verwijder knop
-                            Button {
-                                isMenuVisible = true
-                            } label: {
-                                Image(systemName: "ellipsis")
-                                    .contextMenu {
-                                        Button(action: {
-                                            // Handle other menu item
-                                            print("Other menu item")
-                                        }) {
-                                            Label("Other Item", systemImage: "doc")
-                                        }
+                            // tile
+                            Rectangle()
+                                .frame(width: 165, height: 210)
+                                .foregroundColor(appYellow)
+                                // geef menu om te wijzigen of verwijderen
+                                .contextMenu {
+                                    Button(action: {
+                                        // TODO
+                                        print("Other menu item")
+                                    }) {
+                                        Label("Wijzig", systemImage: "pencil")
+                                    }
 
-                                        Button(role: .destructive) {
-                                            withAnimation {
-                                                context.delete(item)
-                                            }
-                                        } label: {
-                                            Label("Delete", systemImage: "trash.fill")
+                                    Button(role: .destructive) {
+                                        withAnimation {
+                                            context.delete(item)
+                                        }
+                                    } label: {
+                                        Label("Verwijder", systemImage: "trash.fill")
+                                    }
+                                }
+                                .cornerRadius(10)
+                                .shadow(color: Color.gray.opacity(0.5), radius: 3, x: 0, y: 2)
+                                                                    
+                            
+                            // recept tile
+                            VStack(alignment: .leading) {
+                                
+                                Rectangle()
+                                    .frame(width: 170, height: 130)
+                                    .foregroundColor(Color.green)
+                                    .clipShape(RoundedCorner(radius: 10, corners: [.topLeft, .topRight]))
+                                
+                                Spacer()
+                                
+                                Text(item.naam)
+                                    .lineLimit(2)
+                                    .truncationMode(.tail)
+                                    .font(.system(size: 14))
+                                    .bold()
+                                
+                                Spacer()
+                                
+                                // onderkant informatie
+                                HStack {
+                                    if item.isGezond {
+                                        HStack {
+                                            Image(systemName: "carrot.fill")
+                                                .foregroundColor(.green)
+                                        }
+                                    } else {
+                                        HStack {
+                                            Image(systemName: "carrot")
+                                                .foregroundColor(.red)
                                         }
                                     }
-                            }
-    
-                        }
-                        
-                        
-                        // onderkant informatie
-                        HStack {
-                            if item.isGezond {
-                                HStack {
-                                    Image(systemName: "carrot.fill")
-                                    Text("Gezond")
-                                }
-                            } else {
-                                HStack {
-                                    Image(systemName: "carrot")
-                                    Text("Ongezond")
-                                }
-                            }
-                            
-                            if item.isMakkelijk {
-                                HStack {
-                                    Image(systemName: "figure.walk")
-                                    Text("Makkelijk")
-                                }
-                            } else {
-                                HStack {
-                                    Image(systemName: "figure.gymnastics")
-                                    Text("Moeilijk")
+                                    
+                                    if item.isMakkelijk {
+                                        HStack {
+                                            Image(systemName: "figure.walk")
+                                                .foregroundColor(.green)
+                                        }
+                                    } else {
+                                        HStack {
+                                            Image(systemName: "figure.gymnastics")
+                                                .foregroundColor(.red)
+                                        }
+                                    }
+                                    
+                                    Spacer()
+                                    
+                                    HStack {
+                                        Text("\(item.tijd) min")
+                                            .font(.system(size: 14))
+                                            .lineLimit(1)
+                                    }
                                 }
                             }
-                            
-                            HStack {
-                                Image(systemName: "clock.fill")
-                                Text("\(item.tijd) min")
-                            }
+                            .padding()
                         }
                     }
+                    
                 }
-                .listRowSeparator(.hidden)
+                .padding()
             }
-            .listRowBackground(
-                Rectangle()
-                     .fill(Color(.white).opacity(0.35))
-                     .cornerRadius(10.0)
-                     .padding(4))
+            
             .navigationTitle("Receptenboekje")
             .toolbar {
                 ToolbarItem {
@@ -108,13 +128,24 @@ struct Boekje: View {
                     })
                 }
             }
-            .sheet(isPresented: $showCreate, 
+            .sheet(isPresented: $showCreate,
                    content: {
                 NavigationStack {
                         CreateRecept()
                 }
             })
+            
         }
+    }
+}
+
+struct RoundedCorner: Shape {
+    var radius: CGFloat = .infinity
+    var corners: UIRectCorner = .allCorners
+
+    func path(in rect: CGRect) -> Path {
+        let path = UIBezierPath(roundedRect: rect, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
+        return Path(path.cgPath)
     }
 }
 
