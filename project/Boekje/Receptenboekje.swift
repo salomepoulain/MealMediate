@@ -30,29 +30,39 @@ struct Boekje: View {
                 LazyVGrid(columns: adaptiveColumns, spacing: 20) {
                     
                     ForEach(items) { item in
-                        TileView(tile_naam: item.naam, tile_gezond: item.isGezond, tile_vega: item.isMakkelijk, tile_tijd: item.tijd)
-                            .contextMenu {
-                                // button 1
-                                Button(action: {
-                                    // TODO
-                                    print("Other menu item")
-                                }) {
-                                    Label("Wijzig", systemImage: "pencil")
-                                }
+                        NavigationLink {
+                            // TODO
+                        } label: {
+                            ZStack {
                                 
-                                //button 2
-                                Button(role: .destructive) {
-                                    withAnimation {
-                                        context.delete(item)
+                                // Shadow
+                                Rectangle()
+                                .frame(width: 170, height: 210)
+                                .clipShape(RoundedRectangle(cornerRadius: 12))
+                                .shadow(radius: 5)
+                                
+                                // tile
+                                TileView(tile_naam: item.naam, tile_gezond: item.isGezond, tile_lekker: item.lekker, tile_vega: item.isVega, tile_tijd: item.tijd)
+                                    .contextMenu {
+                                        Button(action: {
+                                            // TODO
+                                            print("Other menu item")
+                                        }) {
+                                            Label("Wijzig", systemImage: "pencil")
+                                        }
+                                        Button(role: .destructive) {
+                                            withAnimation {
+                                                context.delete(item)
+                                            }
+                                        } label: {
+                                            Label("Delete", systemImage: "trash.fill")
+                                        }
                                     }
-                                } label: {
-                                    Label("Delete", systemImage: "trash.fill")
-                                }
+                                    
                             }
-                            .clipShape(RoundedRectangle(cornerRadius: 12))
-                            .shadow(radius: 5)
+                        }
+                        .buttonStyle(PlainButtonStyle())
                     }
-                    
                 }
                 .padding()
             }

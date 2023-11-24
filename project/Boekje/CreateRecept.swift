@@ -18,8 +18,9 @@ struct CreateRecept: View {
         List {
             TextField("Naam", text: $item.naam)
             Toggle("Gezond?", isOn: $item.isGezond)
-            Toggle("Makkelijk?", isOn: $item.isMakkelijk)
-            TextField("Tijd", text: $item.tijd)
+            Toggle("Vega?", isOn: $item.isVega)
+            Stepper("Rating: \(item.lekker)", value: $item.lekker, in: 1...3)
+            Stepper("Tijd: \(item.tijd*10) minuten", value: $item.tijd, in: 1...30)
             TextField("Ingredient", text: $item.ingredienten)
             TextField("Uitleg", text: $item.uitleg)
             Button("Create") {

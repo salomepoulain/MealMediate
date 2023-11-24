@@ -12,15 +12,17 @@ import SwiftData
 final class ReceptItem {
     var naam: String
     var isGezond: Bool
-    var isMakkelijk: Bool
-    var tijd: String
+    var lekker: Int
+    var isVega: Bool
+    var tijd: Int
     var ingredienten: String
     var uitleg: String
     
-    init(naam: String = "", isGezond: Bool = false, isMakkelijk: Bool = false, tijd: String = "", ingredienten: String = "", uitleg: String = "") {
+    init(naam: String = "", isGezond: Bool = false, lekker: Int = 1, isVega: Bool = false, tijd: Int = 1, ingredienten: String = "", uitleg: String = "") {
         self.naam = naam
         self.isGezond = isGezond
-        self.isMakkelijk = isMakkelijk
+        self.lekker = lekker
+        self.isVega = isVega
         self.tijd = tijd
         self.ingredienten = ingredienten
         self.uitleg = uitleg

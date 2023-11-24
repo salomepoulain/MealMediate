@@ -11,12 +11,14 @@ struct TileView: View {
     
     var tile_naam: String
     var tile_gezond: Bool
+    var tile_lekker: Int
     var tile_vega: Bool
-    var tile_tijd: String
+    var tile_tijd: Int
     
-    init(tile_naam: String, tile_gezond: Bool, tile_vega: Bool, tile_tijd: String) {
+    init(tile_naam: String, tile_gezond: Bool, tile_lekker: Int, tile_vega: Bool, tile_tijd: Int) {
         self.tile_naam = tile_naam
         self.tile_gezond = tile_gezond
+        self.tile_lekker = tile_lekker
         self.tile_vega = tile_vega
         self.tile_tijd = tile_tijd
     }
@@ -47,24 +49,32 @@ struct TileView: View {
                 HStack{
                     
                     if tile_gezond == true {
-                        Image("apple")
-                            .foregroundColor(.green)
+                        Image("brocolli")
+                            .foregroundColor(Color("IconGreen"))
                     } else {
-                        Image("apple")
-                            .foregroundColor(.red)
+                        Image("hamburger")
+                            .foregroundColor(Color("IconRed"))
+                    }
+                    
+                    if tile_lekker == 1 {
+                        Image("bad")
+                            .foregroundColor(Color("IconRed"))
+                    } else if tile_lekker == 2 {
+                        Image("mid")
+                            .foregroundColor(Color("IconMedium"))
+                    } else if tile_lekker == 3 {
+                        Image("good")
+                            .foregroundColor(Color("IconGreen"))
                     }
                     
                     if tile_vega == true {
                         Image(systemName: "leaf.fill")
-                            .foregroundColor(.green)
-                    } else {
-                        Image(systemName: "leaf.fill")
-                            .foregroundColor(.red)
+                            .foregroundColor(Color("IconGreen"))
                     }
                     
                     Spacer()
                     
-                    Text("\(tile_tijd) min")
+                    Text("\(tile_tijd*10) min")
                         .font(.system(size: 14))
                 }
             }
@@ -74,35 +84,14 @@ struct TileView: View {
         .frame(width: 170, height: 210)
         .background(Color.white)
         .contentShape(.contextMenuPreview, RoundedRectangle(cornerRadius: 12))
+        .clipShape(RoundedRectangle(cornerRadius: 12))
     }
 }
 
 
 #Preview {
-    TileView(tile_naam: "kip samurai", tile_gezond: true, tile_vega: false, tile_tijd: "120")
-        .contextMenu {
-            // button 1
-            Button(action: {
-                // TODO
-                print("Other menu item")
-            }) {
-                Label("Wijzig", systemImage: "pencil")
-            }
-            
-            //button 2
-            Button(role: .destructive) {
-                
-            } label: {
-                Label("Delete", systemImage: "trash.fill")
-            }
-        }
-        .clipShape(RoundedRectangle(cornerRadius: 12))
-        .shadow(radius: 5)
-        
-        
-        
-        
-        
+    TileView(tile_naam: "kip samurai", tile_gezond: true, tile_lekker: 3, tile_vega: true, tile_tijd: 1)
 
+        
         
 }
