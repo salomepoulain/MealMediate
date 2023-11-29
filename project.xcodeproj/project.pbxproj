@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E30649E42B17C69700FC2D5E /* UpdateRecept.swift in Sources */ = {isa = PBXBuildFile; fileRef = E30649E32B17C69700FC2D5E /* UpdateRecept.swift */; };
+		E30649E62B17CCA300FC2D5E /* ReceptFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E30649E52B17CCA300FC2D5E /* ReceptFormView.swift */; };
+		E30649EA2B17D4C000FC2D5E /* ReceptFinishedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E30649E92B17D4C000FC2D5E /* ReceptFinishedView.swift */; };
 		E3163AFE2B0DF69C009CAA9D /* projectApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3163AFD2B0DF69C009CAA9D /* projectApp.swift */; };
 		E3163B002B0DF69C009CAA9D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3163AFF2B0DF69C009CAA9D /* ContentView.swift */; };
 		E3163B022B0DF69F009CAA9D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E3163B012B0DF69F009CAA9D /* Assets.xcassets */; };
@@ -19,6 +22,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E30649E32B17C69700FC2D5E /* UpdateRecept.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateRecept.swift; sourceTree = "<group>"; };
+		E30649E52B17CCA300FC2D5E /* ReceptFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceptFormView.swift; sourceTree = "<group>"; };
+		E30649E92B17D4C000FC2D5E /* ReceptFinishedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceptFinishedView.swift; sourceTree = "<group>"; };
 		E3163AFA2B0DF69C009CAA9D /* project.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = project.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E3163AFD2B0DF69C009CAA9D /* projectApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = projectApp.swift; sourceTree = "<group>"; };
 		E3163AFF2B0DF69C009CAA9D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -85,7 +91,9 @@
 			isa = PBXGroup;
 			children = (
 				E3163B0F2B0DFFB4009CAA9D /* Receptenboekje.swift */,
+				E30649E92B17D4C000FC2D5E /* ReceptFinishedView.swift */,
 				E385D5762B0E2E3200494866 /* CreateRecept.swift */,
+				E30649E32B17C69700FC2D5E /* UpdateRecept.swift */,
 				E3D995B32B0EA00D00324865 /* Views */,
 			);
 			path = Boekje;
@@ -110,6 +118,7 @@
 			isa = PBXGroup;
 			children = (
 				E3D995B12B0E9EC100324865 /* TileView.swift */,
+				E30649E52B17CCA300FC2D5E /* ReceptFormView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -185,10 +194,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				E385D5772B0E2E3200494866 /* CreateRecept.swift in Sources */,
+				E30649EA2B17D4C000FC2D5E /* ReceptFinishedView.swift in Sources */,
 				E3D995B22B0E9EC100324865 /* TileView.swift in Sources */,
 				E3163B002B0DF69C009CAA9D /* ContentView.swift in Sources */,
+				E30649E42B17C69700FC2D5E /* UpdateRecept.swift in Sources */,
 				E3163B102B0DFFB4009CAA9D /* Receptenboekje.swift in Sources */,
 				E3163AFE2B0DF69C009CAA9D /* projectApp.swift in Sources */,
+				E30649E62B17CCA300FC2D5E /* ReceptFormView.swift in Sources */,
 				E385D5752B0E2BF400494866 /* ReceptenModel.swift in Sources */,
 				E3163B0E2B0DFB99009CAA9D /* Home.swift in Sources */,
 			);

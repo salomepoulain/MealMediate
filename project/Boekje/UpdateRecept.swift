@@ -1,25 +1,21 @@
 //
-//  CreateRecept.swift
+//  UpdateRecept.swift
 //  project
 //
-//  Created by Salome Poulain on 22/11/2023.
+//  Created by Salome Poulain on 29/11/2023.
 //
 
 import SwiftUI
 
-struct CreateRecept: View {
+struct UpdateRecept: View {
     
     @Environment(\.dismiss) var dismiss
-    @Environment(\.modelContext) var context
-
-    @State private var item = ReceptItem()
-    
+    @Bindable var item: ReceptItem
     
     var body: some View {
-        
         NavigationStack {
             ReceptListView(item: item)
-                .navigationTitle("Creëer recept")
+                .navigationTitle("Weizig recept")
                 .toolbar {
                     ToolbarItem(placement: .navigationBarLeading) {
                         Button (action: {
@@ -31,21 +27,14 @@ struct CreateRecept: View {
                     
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button (action: {
-                            withAnimation {
-                                context.insert(item)
-                            }
                             dismiss()
                         }, label: {
-                            Text("Voeg toe")
+                            Text("Weizig")
                         })
                     }
                 }
         }
-        .tint(.accentColor)
     }
 }
 
-#Preview {
-    CreateRecept()
-        .modelContainer(for: ReceptItem.self)
-}
+

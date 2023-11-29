@@ -14,7 +14,10 @@ struct Boekje: View {
     @Environment(\.modelContext) var context
     
     @State private var showCreate = false
-    @Query private var items: [ReceptItem]
+    @State private var ReceptEdit: ReceptItem?
+    @Query (
+        sort: \ReceptItem.naam
+    ) private var items: [ReceptItem]
     
     private let adaptiveColumns = [
         GridItem(.adaptive(minimum: 165))
@@ -31,7 +34,7 @@ struct Boekje: View {
                     
                     ForEach(items) { item in
                         NavigationLink {
-                            // TODO
+                            ReceptFinishedView(fin_naam: item.naam, fin_gezond: item.isGezond, fin_lekker: item.lekker, fin_vega: item.isVega, fin_tijd: item.tijd, fin_ingredienten: item.ingredienten, fin_uitleg: item.uitleg)
                         } label: {
                             ZStack {
                                 
@@ -44,12 +47,12 @@ struct Boekje: View {
                                 // tile
                                 TileView(tile_naam: item.naam, tile_gezond: item.isGezond, tile_lekker: item.lekker, tile_vega: item.isVega, tile_tijd: item.tijd)
                                     .contextMenu {
-                                        Button(action: {
-                                            // TODO
-                                            print("Other menu item")
-                                        }) {
+                                        Button{
+                                            ReceptEdit = item
+                                        } label: {
                                             Label("Wijzig", systemImage: "pencil")
                                         }
+                                               
                                         Button(role: .destructive) {
                                             withAnimation {
                                                 context.delete(item)
@@ -83,8 +86,15 @@ struct Boekje: View {
                         CreateRecept()
                 }
             })
+            .sheet(item: $ReceptEdit) {
+                ReceptEdit = nil
+            } content: { item in
+                UpdateRecept(item: item)
+            }
+
             
         }
+
     }
 }
 

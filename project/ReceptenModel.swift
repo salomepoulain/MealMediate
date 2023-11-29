@@ -18,7 +18,7 @@ final class ReceptItem {
     var ingredienten: String
     var uitleg: String
     
-    init(naam: String = "", isGezond: Bool = false, lekker: Int = 1, isVega: Bool = false, tijd: Int = 1, ingredienten: String = "", uitleg: String = "") {
+    init(naam: String = "", isGezond: Bool = false, lekker: Int = 0, isVega: Bool = false, tijd: Int = 0, ingredienten: String = "", uitleg: String = "") {
         self.naam = naam
         self.isGezond = isGezond
         self.lekker = lekker

@@ -74,7 +74,7 @@ struct TileView: View {
                     
                     Spacer()
                     
-                    Text("\(tile_tijd*10) min")
+                    Text("\(tile_tijd*5) min")
                         .font(.system(size: 14))
                 }
             }
