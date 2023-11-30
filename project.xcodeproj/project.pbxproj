@@ -91,9 +91,9 @@
 			isa = PBXGroup;
 			children = (
 				E3163B0F2B0DFFB4009CAA9D /* Receptenboekje.swift */,
-				E30649E92B17D4C000FC2D5E /* ReceptFinishedView.swift */,
 				E385D5762B0E2E3200494866 /* CreateRecept.swift */,
 				E30649E32B17C69700FC2D5E /* UpdateRecept.swift */,
+				E30649E92B17D4C000FC2D5E /* ReceptFinishedView.swift */,
 				E3D995B32B0EA00D00324865 /* Views */,
 			);
 			path = Boekje;

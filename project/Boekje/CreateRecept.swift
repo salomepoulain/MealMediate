@@ -14,11 +14,13 @@ struct CreateRecept: View {
 
     @State private var item = ReceptItem()
     
+    @State private var isNameEntered: Bool = false
+    @State private var isImageAdded: Bool = false
     
     var body: some View {
         
         NavigationStack {
-            ReceptListView(item: item)
+            ReceptListView(item: item, isNameEntered: $isNameEntered, isImageAdded: $isImageAdded)
                 .navigationTitle("Creëer recept")
                 .toolbar {
                     ToolbarItem(placement: .navigationBarLeading) {
@@ -30,16 +32,18 @@ struct CreateRecept: View {
                     }
                     
                     ToolbarItem(placement: .navigationBarTrailing) {
-                        Button (action: {
+                        Button(action: {
                             withAnimation {
                                 context.insert(item)
                             }
                             dismiss()
                         }, label: {
                             Text("Voeg toe")
+                                .foregroundColor(isImageAdded ? Color.accentColor : Color.gray)
                         })
+                        .disabled(!isNameEntered)
                     }
-                }
+            }
         }
         .tint(.accentColor)
     }

@@ -34,7 +34,7 @@ struct Boekje: View {
                     
                     ForEach(items) { item in
                         NavigationLink {
-                            ReceptFinishedView(fin_naam: item.naam, fin_gezond: item.isGezond, fin_lekker: item.lekker, fin_vega: item.isVega, fin_tijd: item.tijd, fin_ingredienten: item.ingredienten, fin_uitleg: item.uitleg)
+                            ReceptFinishedView(fin_naam: item.naam, fin_gezond: item.isGezond, fin_lekker: item.lekker, fin_vega: item.isVega, fin_tijd: item.tijd, fin_ingredienten: item.ingredienten, fin_uitleg: item.uitleg, fin_image: item.image)
                         } label: {
                             ZStack {
                                 
@@ -44,8 +44,7 @@ struct Boekje: View {
                                 .clipShape(RoundedRectangle(cornerRadius: 12))
                                 .shadow(radius: 5)
                                 
-                                // tile
-                                TileView(tile_naam: item.naam, tile_gezond: item.isGezond, tile_lekker: item.lekker, tile_vega: item.isVega, tile_tijd: item.tijd)
+                                TileView(tile_naam: item.naam, tile_gezond: item.isGezond, tile_lekker: item.lekker, tile_vega: item.isVega, tile_tijd: item.tijd, tile_image: item.image)
                                     .contextMenu {
                                         Button{
                                             ReceptEdit = item

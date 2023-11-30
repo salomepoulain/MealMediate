@@ -16,9 +16,11 @@ final class ReceptItem {
     var isVega: Bool
     var tijd: Int
     var ingredienten: String
-    var uitleg: String
+    var uitleg: [String]
     
-    init(naam: String = "", isGezond: Bool = false, lekker: Int = 0, isVega: Bool = false, tijd: Int = 0, ingredienten: String = "", uitleg: String = "") {
+    var image: Data?
+    
+    init(naam: String = "", isGezond: Bool = false, lekker: Int = 2, isVega: Bool = false, tijd: Int = 0, ingredienten: String = "", uitleg: [String] = [""]) {
         self.naam = naam
         self.isGezond = isGezond
         self.lekker = lekker
@@ -26,6 +28,7 @@ final class ReceptItem {
         self.tijd = tijd
         self.ingredienten = ingredienten
         self.uitleg = uitleg
+        
     }
 }
 

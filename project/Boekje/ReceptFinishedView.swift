@@ -15,9 +15,10 @@ struct ReceptFinishedView: View {
     var fin_vega: Bool
     var fin_tijd: Int
     var fin_ingredienten: String
-    var fin_uitleg: String
+    var fin_uitleg: [String]
+    var fin_image: Data?
     
-    init(fin_naam: String, fin_gezond: Bool, fin_lekker: Int, fin_vega: Bool, fin_tijd: Int, fin_ingredienten: String, fin_uitleg: String) {
+    init(fin_naam: String, fin_gezond: Bool, fin_lekker: Int, fin_vega: Bool, fin_tijd: Int, fin_ingredienten: String, fin_uitleg: [String], fin_image: Data?) {
         self.fin_naam = fin_naam
         self.fin_gezond = fin_gezond
         self.fin_lekker = fin_lekker
@@ -25,6 +26,7 @@ struct ReceptFinishedView: View {
         self.fin_tijd = fin_tijd
         self.fin_ingredienten = fin_ingredienten
         self.fin_uitleg = fin_uitleg
+        self.fin_image = fin_image
     }
     
     var body: some View {
@@ -32,10 +34,14 @@ struct ReceptFinishedView: View {
             ScrollView {
                 
                 VStack(alignment: .leading) {
-                    Rectangle()
-                        .fill(Color.green)
-                        .aspectRatio(170/130, contentMode: .fit)
-                        .cornerRadius(10)
+                    
+                    if let imageData = fin_image,
+                       let uiImage = UIImage(data: imageData) {
+                        Image(uiImage: uiImage)
+                            .resizable()
+                            .aspectRatio(170/130, contentMode: .fit)
+                            .cornerRadius(10)
+                    }
                     
                     HStack{
                         Text(fin_naam)
@@ -100,7 +106,9 @@ struct ReceptFinishedView: View {
                         .bold()
                         .padding(.bottom, 10)
                     
-                    Text(fin_uitleg)
+                    ForEach(fin_uitleg, id: \.self) { item in
+                        Text(item)
+                    }
                 }
                 
             }
