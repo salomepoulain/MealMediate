@@ -13,7 +13,10 @@ struct projectApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .modelContainer(for: ReceptItem.self)
+                .modelContainer(for: [
+                    ReceptItem.self,
+                    IngredientItem.self
+                ])
         }
     }
 }

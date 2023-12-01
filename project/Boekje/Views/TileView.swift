@@ -14,7 +14,7 @@ struct TileView: View {
     var tile_lekker: Int
     var tile_vega: Bool
     var tile_tijd: Int
-    var tile_image: Data? // New property for image data
+    var tile_image: Data? 
     
     init(tile_naam: String, tile_gezond: Bool, tile_lekker: Int, tile_vega: Bool, tile_tijd: Int, tile_image: Data?) {
         self.tile_naam = tile_naam
@@ -32,7 +32,9 @@ struct TileView: View {
                let uiImage = UIImage(data: imageData) {
                 Image(uiImage: uiImage)
                     .resizable()
+                    .aspectRatio(contentMode: .fill)
                     .frame(width: 170, height: 130)
+                    .clipShape(Rectangle())
             }
             
             // Bottom half: Info

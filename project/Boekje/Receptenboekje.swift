@@ -34,10 +34,30 @@ struct Boekje: View {
                     
                     ForEach(items) { item in
                         NavigationLink {
-                            ReceptFinishedView(fin_naam: item.naam, fin_gezond: item.isGezond, fin_lekker: item.lekker, fin_vega: item.isVega, fin_tijd: item.tijd, fin_ingredienten: item.ingredienten, fin_uitleg: item.uitleg, fin_image: item.image)
+                            ReceptFinishedView(fin_naam: item.naam, fin_gezond: item.isGezond, fin_lekker: item.lekker, fin_vega: item.isVega, fin_tijd: item.tijd, fin_uitleg: item.uitleg, fin_image: item.image)
+                                .toolbar {
+                                    ToolbarItem {
+                                        Menu {
+                                            Button{
+                                                ReceptEdit = item
+                                            } label: {
+                                                Label("Wijzig", systemImage: "pencil")
+                                            }
+                                            
+                                            Button(role: .destructive) {
+                                                withAnimation {
+                                                    context.delete(item)
+                                                }
+                                            } label: {
+                                                Label("Verwijder", systemImage: "trash.fill")
+                                            }
+                                        } label: {
+                                            Label("Menu", systemImage: "ellipsis.circle")
+                                        }
+                                    }
+                                }
                         } label: {
                             ZStack {
-                                
                                 // Shadow
                                 Rectangle()
                                 .frame(width: 170, height: 210)
@@ -57,7 +77,7 @@ struct Boekje: View {
                                                 context.delete(item)
                                             }
                                         } label: {
-                                            Label("Delete", systemImage: "trash.fill")
+                                            Label("Verwijder", systemImage: "trash.fill")
                                         }
                                     }
                                     
@@ -79,12 +99,9 @@ struct Boekje: View {
                     })
                 }
             }
-            .sheet(isPresented: $showCreate,
-                   content: {
-                NavigationStack {
-                        CreateRecept()
-                }
-            })
+            .sheet(isPresented: $showCreate){
+                CreateRecept()
+            }
             .sheet(item: $ReceptEdit) {
                 ReceptEdit = nil
             } content: { item in

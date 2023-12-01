@@ -7,10 +7,17 @@
 
 import SwiftUI
 import PhotosUI
+import SwiftData
 
 struct ReceptListView: View {
+    
+    @Environment(\.dismiss) var dismiss
+    @Environment(\.modelContext) private var context
+    
     @Bindable var item: ReceptItem
+    
     @State private var isPickerPresented = false
+    @State private var isIngredientListViewPresented = false
     
     var isNameEntered: Binding<Bool>?
     var isImageAdded: Binding<Bool>?
@@ -46,11 +53,10 @@ struct ReceptListView: View {
                         ZStack(alignment: .bottomTrailing) {
                             Image(uiImage: uiImage)
                                 .resizable()
-                                .aspectRatio(170/130, contentMode: .fill)
-                                .clipShape(
-                                    RoundedRectangle(cornerRadius: 10, style: .continuous)
-                                )
-                                .padding([.top, .bottom], 5)
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: UIScreen.main.bounds.width-30, height: 270)
+                                .clipped()
+                                .padding([.top, .bottom], -15)
 
                             Image(systemName: "camera.fill")
                                 .foregroundColor(.white)
@@ -63,7 +69,7 @@ struct ReceptListView: View {
                     if item.image != nil{
                         isImageAdded?.wrappedValue = true
                     } else {
-                        isImageAdded?.wrappedValue = false
+                        isImageAdded?.wrappedValue = true
                     }
                 }
             }
@@ -109,14 +115,26 @@ struct ReceptListView: View {
             }
             
             Section(header: Text("Kies ingredienten")) {
-                TextField("Ingredient", text: $item.ingredienten)
+                
+                ForEach(item.ingredienten.unsafelyUnwrapped) { ingredient in
+                    Text(ingredient.naam)
+                }
+                
+                Button {
+                    isIngredientListViewPresented.toggle()
+                   } label: {
+                       Text("Kies")
+                   }
+                   .sheet(isPresented: $isIngredientListViewPresented) {
+                        IngredientListView()
+                }
             }
             
             
             Section(header: Text("Voeg stappen toe")) {
                 ForEach(item.uitleg.indices, id: \.self) { index in
-                    TextEditor(text: $item.uitleg[index])
-                        .frame(height: 40)
+                    TextField("Uitleg stap \(index + 1)", text: $item.uitleg[index], axis: .vertical)
+                        .lineLimit(2...4)
                 }
                 .onDelete { indexSet in
                     item.uitleg.remove(atOffsets: indexSet)

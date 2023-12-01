@@ -6,13 +6,14 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct CreateRecept: View {
     
     @Environment(\.dismiss) var dismiss
     @Environment(\.modelContext) var context
-
-    @State private var item = ReceptItem()
+    
+    @State private var recept = ReceptItem()
     
     @State private var isNameEntered: Bool = false
     @State private var isImageAdded: Bool = false
@@ -20,7 +21,7 @@ struct CreateRecept: View {
     var body: some View {
         
         NavigationStack {
-            ReceptListView(item: item, isNameEntered: $isNameEntered, isImageAdded: $isImageAdded)
+            ReceptListView(item: recept, isNameEntered: $isNameEntered)
                 .navigationTitle("Creëer recept")
                 .toolbar {
                     ToolbarItem(placement: .navigationBarLeading) {
@@ -34,7 +35,7 @@ struct CreateRecept: View {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button(action: {
                             withAnimation {
-                                context.insert(item)
+                                context.insert(recept)
                             }
                             dismiss()
                         }, label: {

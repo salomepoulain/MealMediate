@@ -14,17 +14,15 @@ struct ReceptFinishedView: View {
     var fin_lekker: Int
     var fin_vega: Bool
     var fin_tijd: Int
-    var fin_ingredienten: String
     var fin_uitleg: [String]
     var fin_image: Data?
     
-    init(fin_naam: String, fin_gezond: Bool, fin_lekker: Int, fin_vega: Bool, fin_tijd: Int, fin_ingredienten: String, fin_uitleg: [String], fin_image: Data?) {
+    init(fin_naam: String, fin_gezond: Bool, fin_lekker: Int, fin_vega: Bool, fin_tijd: Int, fin_uitleg: [String], fin_image: Data?) {
         self.fin_naam = fin_naam
         self.fin_gezond = fin_gezond
         self.fin_lekker = fin_lekker
         self.fin_vega = fin_vega
         self.fin_tijd = fin_tijd
-        self.fin_ingredienten = fin_ingredienten
         self.fin_uitleg = fin_uitleg
         self.fin_image = fin_image
     }
@@ -33,17 +31,19 @@ struct ReceptFinishedView: View {
         NavigationStack {
             ScrollView {
                 
-                VStack(alignment: .leading) {
-                    
-                    if let imageData = fin_image,
-                       let uiImage = UIImage(data: imageData) {
+                if let imageData = fin_image,
+                   let uiImage = UIImage(data: imageData) {
+                   
                         Image(uiImage: uiImage)
                             .resizable()
-                            .aspectRatio(170/130, contentMode: .fit)
-                            .cornerRadius(10)
-                    }
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: UIScreen.main.bounds.width, height: 300)
+                            .clipped()
+                }
+                
+                VStack(alignment: .leading) {
                     
-                    HStack{
+                    HStack {
                         Text(fin_naam)
                             .font(.title)
                             .bold()
@@ -97,7 +97,7 @@ struct ReceptFinishedView: View {
                         .bold()
                         .padding(.bottom, 10)
                     
-                    Text(fin_ingredienten)
+                    // Text(fin_ingredienten)
                     
                     Divider()
                         .padding(10)
@@ -110,9 +110,9 @@ struct ReceptFinishedView: View {
                         Text(item)
                     }
                 }
-                
+                .frame(width: UIScreen.main.bounds.width*0.9)
             }
-            .frame(width: UIScreen.main.bounds.width * 0.9)
+            .navigationBarTitle("", displayMode: .inline)
         }
     }
 }
