@@ -31,12 +31,13 @@ struct ContentView: View {
                 Text("Boodschappen")
             }
         
-            IngredientListView()
+            HomeView()
             .tabItem {
                 Image(systemName: "info.circle.fill")
                 Text("Gezond")
             }
         }
+        .tint(.accentColor)
     }
 }
 

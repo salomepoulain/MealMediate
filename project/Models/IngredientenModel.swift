@@ -12,11 +12,12 @@ import SwiftData
 class IngredientItem {
     @Attribute(.unique) var naam: String
     
-    @Relationship var recepten: [ReceptItem]
+    @Relationship var recepten: [ReceptItem]?
+    
     @Attribute(.ephemeral) var isChecked = false
     
-    init(naam: String, recepten: [ReceptItem]) {
+    init(naam: String, isChecked: Bool = false) {
         self.naam = naam
-        self.recepten = recepten
+        self.isChecked = isChecked
     }
 }

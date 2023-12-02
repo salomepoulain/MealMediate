@@ -9,26 +9,12 @@ import SwiftUI
 
 struct TileView: View {
     
-    var tile_naam: String
-    var tile_gezond: Bool
-    var tile_lekker: Int
-    var tile_vega: Bool
-    var tile_tijd: Int
-    var tile_image: Data? 
-    
-    init(tile_naam: String, tile_gezond: Bool, tile_lekker: Int, tile_vega: Bool, tile_tijd: Int, tile_image: Data?) {
-        self.tile_naam = tile_naam
-        self.tile_gezond = tile_gezond
-        self.tile_lekker = tile_lekker
-        self.tile_vega = tile_vega
-        self.tile_tijd = tile_tijd
-        self.tile_image = tile_image
-    }
+    @Bindable var receptItem: ReceptItem
     
     var body: some View {
         VStack {
             // Top half: Image
-            if let imageData = tile_image,
+            if let imageData = receptItem.image,
                let uiImage = UIImage(data: imageData) {
                 Image(uiImage: uiImage)
                     .resizable()
@@ -41,7 +27,7 @@ struct TileView: View {
             VStack(){
             
                 HStack{
-                    Text(tile_naam)
+                    Text(receptItem.naam)
                         .foregroundColor(.black)
                         .lineLimit(2)
                         .truncationMode(.tail)
@@ -55,7 +41,7 @@ struct TileView: View {
                 
                 HStack{
                     
-                    if tile_gezond == true {
+                    if receptItem.isGezond == true {
                         Image("brocolli")
                             .foregroundColor(Color("IconGreen"))
                     } else {
@@ -63,25 +49,25 @@ struct TileView: View {
                             .foregroundColor(Color("IconRed"))
                     }
                     
-                    if tile_lekker == 1 {
+                    if receptItem.lekker == 1 {
                         Image("bad")
                             .foregroundColor(Color("IconRed"))
-                    } else if tile_lekker == 2 {
+                    } else if receptItem.lekker == 2 {
                         Image("mid")
                             .foregroundColor(Color("IconMedium"))
-                    } else if tile_lekker == 3 {
+                    } else if receptItem.lekker == 3 {
                         Image("good")
                             .foregroundColor(Color("IconGreen"))
                     }
                     
-                    if tile_vega == true {
+                    if receptItem.isVega == true {
                         Image(systemName: "leaf.fill")
                             .foregroundColor(Color("IconGreen"))
                     }
                     
                     Spacer()
                     
-                    Text("\(tile_tijd*5) min")
+                    Text("\(receptItem.tijd*5) min")
                         .font(.system(size: 14))
                 }
             }

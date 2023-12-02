@@ -16,8 +16,14 @@ struct ReceptListView: View {
     
     @Bindable var item: ReceptItem
     
+    @Query(sort: \IngredientItem.naam, order: .forward) var ingredienten: [IngredientItem]
+    
     @State private var isPickerPresented = false
     @State private var isIngredientListViewPresented = false
+    
+    private var shouldShowIngredients: Bool {
+            ingredienten.contains { $0.isChecked }
+        }
     
     var isNameEntered: Binding<Bool>?
     var isImageAdded: Binding<Bool>?
@@ -27,8 +33,9 @@ struct ReceptListView: View {
     var body: some View {
         List {
             
-            Section(header: Text("Geef naam")) {
-                TextField("Zoals: \"Paddenstoelenschotel\"", text: $item.naam)
+            // Naam
+            Section {
+                TextField("Naam recept", text: $item.naam, axis: .vertical)
                     .onChange(of: item.naam) {
                         if !item.naam.isEmpty {
                             isNameEntered?.wrappedValue = true
@@ -38,13 +45,14 @@ struct ReceptListView: View {
                     }
             }
             
-            Section(header: Text("Selecteer foto")) {
+            // Photo
+            Section {
                 PhotosPicker(selection: $SelectedPhoto,
                              matching: .images,
                              photoLibrary: .shared()) {
 
                     if item.image == nil {
-                        Label("Voeg foto toe", systemImage: "photo")
+                        Label("Voeg foto toe", systemImage: "photo.badge.plus.fill")
                             .frame(maxWidth: .infinity, alignment: .center)
                     }
 
@@ -74,8 +82,8 @@ struct ReceptListView: View {
                 }
             }
 
-            
-            Section(header: Text("Eigenschappen")) {
+            // Opties
+            Section {
                 Toggle("Gezond", isOn: $item.isGezond)
                 Toggle("Vegetarisch", isOn: $item.isVega)
                 
@@ -102,36 +110,54 @@ struct ReceptListView: View {
                         .pickerStyle(WheelPickerStyle())
                     }
                 }
-            }
-            
-            Section(header: Text("Beoordeling")) {
-                Picker(selection: $item.lekker, label: Text("")) {
-                    Image("bad").tag(1)
-                    Image("mid").tag(2)
-                    Image("good").tag(3)
-                }
-                .pickerStyle(SegmentedPickerStyle())
-                .padding([.top, .bottom], 7)
-            }
-            
-            Section(header: Text("Kies ingredienten")) {
                 
-                ForEach(item.ingredienten.unsafelyUnwrapped) { ingredient in
-                    Text(ingredient.naam)
+                VStack(alignment: .leading) {
+                    Text("Hoe lekker")
+                    
+                    Picker(selection: $item.lekker, label: Text("")) {
+                        Image("bad").tag(1)
+                        Image("mid").tag(2)
+                        Image("good").tag(3)
+                    }
+                    .pickerStyle(SegmentedPickerStyle())
+                    .padding([.top, .bottom], 7)
+                }
+                
+            }
+            
+            
+            // Ingredienten
+            Section {
+                
+                Stepper("Porties: \(item.porties)", value: $item.porties, in: 1...8)
+                
+                if shouldShowIngredients {
+                    VStack(alignment: .leading) {
+                        ForEach(ingredienten) { ingredient in
+                            if ingredient.isChecked {
+                                Text("- \(ingredient.naam)")
+                                    .padding(.bottom, 1)
+                            }
+                        }
+                    }
                 }
                 
                 Button {
                     isIngredientListViewPresented.toggle()
-                   } label: {
-                       Text("Kies")
-                   }
-                   .sheet(isPresented: $isIngredientListViewPresented) {
-                        IngredientListView()
+                } label: {
+                    Label("Selecteer ingrediëntenen", systemImage: "list.bullet.clipboard.fill")
+                        .frame(maxWidth: .infinity, alignment: .center)
                 }
+                .sheet(isPresented: $isIngredientListViewPresented) {
+                    IngredientListView(receptItem: item)
+                }
+                
+
             }
             
             
-            Section(header: Text("Voeg stappen toe")) {
+            // Text uitleg
+            Section {
                 ForEach(item.uitleg.indices, id: \.self) { index in
                     TextField("Uitleg stap \(index + 1)", text: $item.uitleg[index], axis: .vertical)
                         .lineLimit(2...4)
@@ -140,18 +166,16 @@ struct ReceptListView: View {
                     item.uitleg.remove(atOffsets: indexSet)
                 }
                 
-                Button(action: {
-                       if item.uitleg.allSatisfy({ !$0.isEmpty }) {
-                           item.uitleg.append("")
-                       }
-                   }) {
-                    HStack {
-                        Spacer()
-                        Text("Voeg stap toe")
-                            .foregroundColor(item.uitleg.allSatisfy { !$0.isEmpty } ? Color.accentColor : Color.gray)
-                        Spacer()
+                Button {
+                    if item.uitleg.allSatisfy({ !$0.isEmpty }) {
+                        item.uitleg.append("")
                     }
+                } label: {
+                    Label("Voeg stap toe", systemImage: "text.badge.plus")
+                        .foregroundColor(item.uitleg.allSatisfy { !$0.isEmpty } ? Color.accentColor : Color.gray)
+                        .frame(maxWidth: .infinity, alignment: .center)
                 }
+
             }
 
         }

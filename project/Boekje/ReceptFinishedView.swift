@@ -9,29 +9,13 @@ import SwiftUI
 
 struct ReceptFinishedView: View {
     
-    var fin_naam: String
-    var fin_gezond: Bool
-    var fin_lekker: Int
-    var fin_vega: Bool
-    var fin_tijd: Int
-    var fin_uitleg: [String]
-    var fin_image: Data?
-    
-    init(fin_naam: String, fin_gezond: Bool, fin_lekker: Int, fin_vega: Bool, fin_tijd: Int, fin_uitleg: [String], fin_image: Data?) {
-        self.fin_naam = fin_naam
-        self.fin_gezond = fin_gezond
-        self.fin_lekker = fin_lekker
-        self.fin_vega = fin_vega
-        self.fin_tijd = fin_tijd
-        self.fin_uitleg = fin_uitleg
-        self.fin_image = fin_image
-    }
+    @Bindable var receptItem: ReceptItem
     
     var body: some View {
         NavigationStack {
             ScrollView {
                 
-                if let imageData = fin_image,
+                if let imageData = receptItem.image,
                    let uiImage = UIImage(data: imageData) {
                    
                         Image(uiImage: uiImage)
@@ -43,16 +27,18 @@ struct ReceptFinishedView: View {
                 
                 VStack(alignment: .leading) {
                     
+                    // naam
                     HStack {
-                        Text(fin_naam)
+                        Text(receptItem.naam)
                             .font(.title)
                             .bold()
                         Spacer()
                     }
                     .padding(.bottom, 10)
                     
+                    // icoontjes info
                     HStack {
-                        if fin_gezond == true {
+                        if receptItem.isGezond == true {
                             Image("brocolli")
                                 .foregroundColor(Color("IconGreen"))
                             Text("gezond")
@@ -63,22 +49,22 @@ struct ReceptFinishedView: View {
                         }
                         
                         
-                        if fin_lekker == 1 {
+                        if receptItem.lekker == 1 {
                             Image("bad")
                                 .foregroundColor(Color("IconRed"))
                             Text("ok")
-                        } else if fin_lekker == 2 {
+                        } else if receptItem.lekker == 2 {
                             Image("mid")
                                 .foregroundColor(Color("IconMedium"))
                             Text("lekker")
-                        } else if fin_lekker == 3 {
+                        } else if receptItem.lekker == 3 {
                             Image("good")
                                 .foregroundColor(Color("IconGreen"))
                             Text("heerlijk")
                         }
                         
                         
-                        if fin_vega == true {
+                        if receptItem.isVega == true {
                             Image(systemName: "leaf.fill")
                                 .foregroundColor(Color("IconGreen"))
                             Text("vega")
@@ -86,30 +72,69 @@ struct ReceptFinishedView: View {
                         
                         Spacer()
                         
-                        Text("\(fin_tijd*5) min")
+                        Text("\(receptItem.tijd*5) min")
                             .bold()
                     }
                     
                     Divider()
-                        .padding(10)
+                        .padding(15)
                     
-                    Text("Ingrediënten:")
+                    // ingredienten
+                    Text("Ingrediënten")
                         .bold()
                         .padding(.bottom, 10)
                     
-                    // Text(fin_ingredienten)
+                    if let ingredients = receptItem.ingredienten {
+                        ForEach(ingredients, id: \.self) { item in
+                            HStack {
+                                Text("-")
+                                //Image(systemName: "circle")
+                                    .foregroundColor(Color.accentColor)
+                                    .bold()
+                                    .padding(1)
+                                    .padding(.leading, 10)
+
+                                Text(item.naam)
+                                    .padding(1)
+                            }
+                        }
+                    }
                     
                     Divider()
-                        .padding(10)
+                        .padding(15)
                     
-                    Text("Stappen")
-                        .bold()
-                        .padding(.bottom, 10)
-                    
-                    ForEach(fin_uitleg, id: \.self) { item in
-                        Text(item)
+                    // uitleg
+                    HStack {
+                        Text("Stappen")
+                            .bold()
+                        
+                        Spacer()
+                        
+                        Text("\(receptItem.porties)")
+                            .bold()
+                            .foregroundColor(Color.accentColor)
+                        
+                        Image(systemName: "fork.knife")
+                            .foregroundColor(Color.accentColor)
                     }
+                    .padding(.bottom, 10)
+                    
+                    ForEach(Array(receptItem.uitleg.enumerated()), id: \.1) { index, item in
+                        HStack {
+                            Text("\(index + 1)")
+                                .foregroundColor(.accentColor)
+                                .padding(1)
+                                .padding(.leading, 10)
+                                .bold()
+
+                            Text("\(item)")
+                                .padding(1)
+                        }
+                        .padding(.bottom, 10)
+                    }
+                    
                 }
+                .padding(.bottom, 50)
                 .frame(width: UIScreen.main.bounds.width*0.9)
             }
             .navigationBarTitle("", displayMode: .inline)

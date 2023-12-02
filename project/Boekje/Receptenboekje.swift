@@ -17,7 +17,9 @@ struct Boekje: View {
     @State private var ReceptEdit: ReceptItem?
     @Query (
         sort: \ReceptItem.naam
-    ) private var items: [ReceptItem]
+    ) private var receptItems: [ReceptItem]
+    
+    @Query(sort: \IngredientItem.naam, order: .forward) var allIngredienten: [IngredientItem]
     
     private let adaptiveColumns = [
         GridItem(.adaptive(minimum: 165))
@@ -32,9 +34,9 @@ struct Boekje: View {
             ScrollView {
                 LazyVGrid(columns: adaptiveColumns, spacing: 20) {
                     
-                    ForEach(items) { item in
+                    ForEach(receptItems) { item in
                         NavigationLink {
-                            ReceptFinishedView(fin_naam: item.naam, fin_gezond: item.isGezond, fin_lekker: item.lekker, fin_vega: item.isVega, fin_tijd: item.tijd, fin_uitleg: item.uitleg, fin_image: item.image)
+                            ReceptFinishedView(receptItem: item)
                                 .toolbar {
                                     ToolbarItem {
                                         Menu {
@@ -64,7 +66,7 @@ struct Boekje: View {
                                 .clipShape(RoundedRectangle(cornerRadius: 12))
                                 .shadow(radius: 5)
                                 
-                                TileView(tile_naam: item.naam, tile_gezond: item.isGezond, tile_lekker: item.lekker, tile_vega: item.isVega, tile_tijd: item.tijd, tile_image: item.image)
+                                TileView(receptItem: item)
                                     .contextMenu {
                                         Button{
                                             ReceptEdit = item
@@ -105,7 +107,7 @@ struct Boekje: View {
             .sheet(item: $ReceptEdit) {
                 ReceptEdit = nil
             } content: { item in
-                UpdateRecept(item: item)
+                UpdateRecept(recept: item)
             }
 
             
