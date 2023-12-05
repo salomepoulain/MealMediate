@@ -1,15 +1,16 @@
 //
-//  ReceptFormView.swift
+//  UpdateReceptFormView.swift
 //  project
 //
-//  Created by Salome Poulain on 29/11/2023.
+//  Created by Salome Poulain on 05/12/2023.
 //
+
 
 import SwiftUI
 import PhotosUI
 import SwiftData
 
-struct ReceptListView: View {
+struct UpdateReceptFormView: View {
     
     @Environment(\.dismiss) var dismiss
     @Environment(\.modelContext) private var context
@@ -26,7 +27,6 @@ struct ReceptListView: View {
         }
     
     var isNameEntered: Binding<Bool>?
-    var isImageAdded: Binding<Bool>?
     
     @State var SelectedPhoto: PhotosPickerItem?
 
@@ -71,13 +71,6 @@ struct ReceptListView: View {
                                 .opacity(0.7)
                                 .padding(20)
                         }
-                    }
-                }
-                .onChange(of: item.image) {
-                    if item.image != nil{
-                        isImageAdded?.wrappedValue = true
-                    } else {
-                        isImageAdded?.wrappedValue = true
                     }
                 }
             }
@@ -127,7 +120,7 @@ struct ReceptListView: View {
             
             
             // Ingredienten
-            Section { 
+            Section {
                 DisclosureGroup("Gekozen ingrediënten (\(ingredienten.filter { $0.isChecked }.count))") {
                     ForEach(ingredienten) { ingredient in
                         if ingredient.isChecked {
@@ -195,3 +188,4 @@ struct ReceptListView: View {
     }
     
 }
+

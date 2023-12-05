@@ -16,8 +16,28 @@ struct IngredientListView: View {
     @Query(sort: \IngredientItem.naam, order: .forward) var allIngredienten: [IngredientItem]
     
     @State var IngredientText = ""
-    
     @State var selectedItems: Int = 0
+    
+    @State private var searchQuery = ""
+    
+    var filteredIngredienten: [IngredientItem] {
+        
+        if searchQuery.isEmpty{
+            return allIngredienten
+        }
+        
+        let filteredIngredienten = allIngredienten.compactMap { item in
+            let naamContainsQuery = item.naam.range(of: searchQuery,
+                                                      options: .caseInsensitive) != nil
+            
+            // let ingredientNaamContainsQuery = item.ingredienten?.naam.range(of: searchQuery, options:
+                                                                               // .caseInsensitive) != nil
+            return naamContainsQuery ? item : nil
+        }
+        
+        return filteredIngredienten
+    }
+
     
     var body: some View {
         
@@ -57,7 +77,7 @@ struct IngredientListView: View {
                 }
                 
                 Section(header: Text("Alle ingrediënten")) {
-                    ForEach(allIngredienten) { ingredient in
+                    ForEach(filteredIngredienten) { ingredient in
                         HStack {
                             Text(ingredient.naam)
                             if ingredient.isChecked {
@@ -83,8 +103,7 @@ struct IngredientListView: View {
                     }
                 }
             }
-            
-            
+            .searchable(text: $searchQuery, prompt: "Zoek ingredient")
             .toolbar{
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button (action: {

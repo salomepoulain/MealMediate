@@ -29,10 +29,7 @@ struct CreateRecept: View {
                 .toolbar {
                     ToolbarItem(placement: .navigationBarLeading) {
                         Button (action: {
-                            allIngredienten.forEach { ingredient in
-                                ingredient.isChecked = false
-                                ingredient.isBoodschap = false
-                            }
+                            recept.isBoodschap = false
                             
                             dismiss()
                         }, label: {
@@ -48,7 +45,6 @@ struct CreateRecept: View {
                                 if ingredient.isChecked {
                                     ingredienten.append(ingredient)
                                     ingredient.isChecked = false
-                                    ingredient.isBoodschap = false
                                 }
                             }
                             recept.ingredienten = ingredienten
@@ -63,7 +59,12 @@ struct CreateRecept: View {
                         })
                         .disabled(!(isNameEntered && isImageAdded))
                     }
-            }
+                }
+                .toolbar {
+                    ToolbarItem {
+                        
+                    }
+                }
         }
     }
 }

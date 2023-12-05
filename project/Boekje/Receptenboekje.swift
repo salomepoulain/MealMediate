@@ -38,7 +38,8 @@ struct Boekje: View {
             let naamContainsQuery = item.naam.range(of: searchQuery,
                                                       options: .caseInsensitive) != nil
             
-            // let ingredientNaamContainsQuery = item.ingredienten?.naam.range(of: searchQuery, options: .caseInsensitive) != nil
+            // let ingredientNaamContainsQuery = item.ingredienten?.naam.range(of: searchQuery, options:
+                                                                               // .caseInsensitive) != nil
             
             return naamContainsQuery ? item : nil
         }
@@ -59,21 +60,12 @@ struct Boekje: View {
                         NavigationLink {
                             ReceptFinishedView(receptItem: recept)
                                 .toolbar {
-                                                                    
+                             
                                     ToolbarItem(placement: .navigationBarTrailing) {
                                         Menu {
                                             Button {
-                                                if let ingredienten = recept.ingredienten {
-                                                    if ingredienten.isEmpty {
-                                                        
-                                                    }
-                                                    else {
-                                                        ingredienten.forEach { ingredient in
-                                                            ingredient.isBoodschap = true
-                                                        }
-                                                    }
-                                                    showSuccessMessage.toggle()
-                                                }
+                                                recept.isBoodschap = true
+                                                showSuccessMessage.toggle()
                                                                                                 
                                             } label: {
                                                 Label("Voeg toe aan boodschappen", systemImage: "plus.square.fill")
@@ -143,7 +135,7 @@ struct Boekje: View {
                 }
                 .padding()
             }
-            .searchable(text: $searchQuery, prompt: "Zoek gerecht of Ingredient")
+            .searchable(text: $searchQuery, prompt: "Zoek gerecht")
             .navigationTitle("Receptenboekje")
             .toolbar {
                 ToolbarItem {

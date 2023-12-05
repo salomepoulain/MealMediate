@@ -16,7 +16,7 @@ struct UpdateRecept: View {
     
     var body: some View {
         NavigationStack {
-            ReceptListView(item: recept)
+            UpdateReceptFormView(item: recept)
                 .navigationTitle("Wijzig recept")
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
