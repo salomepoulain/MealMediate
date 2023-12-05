@@ -22,8 +22,8 @@ struct ReceptListView: View {
     @State private var isIngredientListViewPresented = false
     
     private var shouldShowIngredients: Bool {
-            ingredienten.contains { $0.isChecked }
-        }
+        ingredienten.contains { $0.isChecked }
+    }
     
     var isNameEntered: Binding<Bool>?
     var isImageAdded: Binding<Bool>?
@@ -149,7 +149,7 @@ struct ReceptListView: View {
                         .frame(maxWidth: .infinity, alignment: .center)
                 }
                 .sheet(isPresented: $isIngredientListViewPresented) {
-                    IngredientListView(receptItem: item)
+                    IngredientListView()
                 }
                 
 

@@ -10,8 +10,6 @@ import SwiftData
 
 struct IngredientListView: View {
     
-    @Bindable var receptItem: ReceptItem
-    
     @Environment(\.dismiss) var dismiss
     @Environment(\.modelContext) private var context
     

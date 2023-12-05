@@ -31,6 +31,7 @@ struct CreateRecept: View {
                         Button (action: {
                             allIngredienten.forEach { ingredient in
                                 ingredient.isChecked = false
+                                ingredient.isBoodschap = false
                             }
                             
                             dismiss()
@@ -47,6 +48,7 @@ struct CreateRecept: View {
                                 if ingredient.isChecked {
                                     ingredienten.append(ingredient)
                                     ingredient.isChecked = false
+                                    ingredient.isBoodschap = false
                                 }
                             }
                             recept.ingredienten = ingredienten

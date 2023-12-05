@@ -25,7 +25,7 @@ struct ContentView: View {
                 Text("Recepten")
             }
         
-            HomeView()
+            Boodschappen()
             .tabItem {
                 Image(systemName: "basket.fill")
                 Text("Boodschappen")

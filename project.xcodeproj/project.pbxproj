@@ -10,6 +10,7 @@
 		E30649E42B17C69700FC2D5E /* UpdateRecept.swift in Sources */ = {isa = PBXBuildFile; fileRef = E30649E32B17C69700FC2D5E /* UpdateRecept.swift */; };
 		E30649E62B17CCA300FC2D5E /* ReceptFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E30649E52B17CCA300FC2D5E /* ReceptFormView.swift */; };
 		E30649EA2B17D4C000FC2D5E /* ReceptFinishedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E30649E92B17D4C000FC2D5E /* ReceptFinishedView.swift */; };
+		E31307212B1F85380032D43B /* ReceptNavigationlinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E31307202B1F85380032D43B /* ReceptNavigationlinkView.swift */; };
 		E3163AFE2B0DF69C009CAA9D /* projectApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3163AFD2B0DF69C009CAA9D /* projectApp.swift */; };
 		E3163B002B0DF69C009CAA9D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3163AFF2B0DF69C009CAA9D /* ContentView.swift */; };
 		E3163B022B0DF69F009CAA9D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E3163B012B0DF69F009CAA9D /* Assets.xcassets */; };
@@ -21,12 +22,14 @@
 		E385D5772B0E2E3200494866 /* CreateRecept.swift in Sources */ = {isa = PBXBuildFile; fileRef = E385D5762B0E2E3200494866 /* CreateRecept.swift */; };
 		E39DB03A2B1A03DD00EF7A7B /* IngredientenModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E39DB0392B1A03DD00EF7A7B /* IngredientenModel.swift */; };
 		E3D995B22B0E9EC100324865 /* TileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3D995B12B0E9EC100324865 /* TileView.swift */; };
+		E3FA4E0D2B1F4666003D11D2 /* Boodschappen.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3FA4E0C2B1F4666003D11D2 /* Boodschappen.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		E30649E32B17C69700FC2D5E /* UpdateRecept.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateRecept.swift; sourceTree = "<group>"; };
 		E30649E52B17CCA300FC2D5E /* ReceptFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceptFormView.swift; sourceTree = "<group>"; };
 		E30649E92B17D4C000FC2D5E /* ReceptFinishedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceptFinishedView.swift; sourceTree = "<group>"; };
+		E31307202B1F85380032D43B /* ReceptNavigationlinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceptNavigationlinkView.swift; sourceTree = "<group>"; };
 		E3163AFA2B0DF69C009CAA9D /* project.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = project.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E3163AFD2B0DF69C009CAA9D /* projectApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = projectApp.swift; sourceTree = "<group>"; };
 		E3163AFF2B0DF69C009CAA9D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -39,6 +42,7 @@
 		E385D5762B0E2E3200494866 /* CreateRecept.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRecept.swift; sourceTree = "<group>"; };
 		E39DB0392B1A03DD00EF7A7B /* IngredientenModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientenModel.swift; sourceTree = "<group>"; };
 		E3D995B12B0E9EC100324865 /* TileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TileView.swift; sourceTree = "<group>"; };
+		E3FA4E0C2B1F4666003D11D2 /* Boodschappen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Boodschappen.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +118,8 @@
 		E3163B142B0E23C7009CAA9D /* Boodschappen */ = {
 			isa = PBXGroup;
 			children = (
+				E3FA4E0C2B1F4666003D11D2 /* Boodschappen.swift */,
+				E31307202B1F85380032D43B /* ReceptNavigationlinkView.swift */,
 			);
 			path = Boodschappen;
 			sourceTree = "<group>";
@@ -212,12 +218,14 @@
 				E3D995B22B0E9EC100324865 /* TileView.swift in Sources */,
 				E3163B002B0DF69C009CAA9D /* ContentView.swift in Sources */,
 				E30649E42B17C69700FC2D5E /* UpdateRecept.swift in Sources */,
+				E31307212B1F85380032D43B /* ReceptNavigationlinkView.swift in Sources */,
 				E39DB03A2B1A03DD00EF7A7B /* IngredientenModel.swift in Sources */,
 				E3163B102B0DFFB4009CAA9D /* Receptenboekje.swift in Sources */,
 				E3163AFE2B0DF69C009CAA9D /* projectApp.swift in Sources */,
 				E30649E62B17CCA300FC2D5E /* ReceptFormView.swift in Sources */,
 				E385D5752B0E2BF400494866 /* ReceptenModel.swift in Sources */,
 				E3163B0E2B0DFB99009CAA9D /* Home.swift in Sources */,
+				E3FA4E0D2B1F4666003D11D2 /* Boodschappen.swift in Sources */,
 				E333C9562B1A0C1A004FFEB2 /* IngredientListView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

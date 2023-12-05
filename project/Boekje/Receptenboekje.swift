@@ -5,7 +5,6 @@
 //  Created by Salome Poulain on 22/11/2023.
 //
 
-import Foundation
 import SwiftUI
 import SwiftData
 
@@ -15,40 +14,93 @@ struct Boekje: View {
     
     @State private var showCreate = false
     @State private var ReceptEdit: ReceptItem?
-    @Query (
-        sort: \ReceptItem.naam
-    ) private var receptItems: [ReceptItem]
     
+    @Query private var recepten: [ReceptItem]
     @Query(sort: \IngredientItem.naam, order: .forward) var allIngredienten: [IngredientItem]
+
     
     private let adaptiveColumns = [
         GridItem(.adaptive(minimum: 165))
     ]
     
     @State private var isContextMenuVisible = false
+    @State private var showSuccessMessage = false
+    
+    @State private var searchQuery = ""
+    
+    var filteredRecepten: [ReceptItem] {
+        
+        if searchQuery.isEmpty{
+            return recepten
+        }
+        
+        let filteredRecepten = recepten.compactMap { item in
+            let naamContainsQuery = item.naam.range(of: searchQuery,
+                                                      options: .caseInsensitive) != nil
+            
+            // let ingredientNaamContainsQuery = item.ingredienten?.naam.range(of: searchQuery, options: .caseInsensitive) != nil
+            
+            return naamContainsQuery ? item : nil
+        }
+        
+        return filteredRecepten
+    }
+
     
     var body: some View {
+        
         
         NavigationStack {
         
             ScrollView {
                 LazyVGrid(columns: adaptiveColumns, spacing: 20) {
                     
-                    ForEach(receptItems) { item in
+                    ForEach(filteredRecepten) { recept in
                         NavigationLink {
-                            ReceptFinishedView(receptItem: item)
+                            ReceptFinishedView(receptItem: recept)
                                 .toolbar {
-                                    ToolbarItem {
+                                                                    
+                                    ToolbarItem(placement: .navigationBarTrailing) {
+                                        Menu {
+                                            Button {
+                                                if let ingredienten = recept.ingredienten {
+                                                    if ingredienten.isEmpty {
+                                                        
+                                                    }
+                                                    else {
+                                                        ingredienten.forEach { ingredient in
+                                                            ingredient.isBoodschap = true
+                                                        }
+                                                    }
+                                                    showSuccessMessage.toggle()
+                                                }
+                                                                                                
+                                            } label: {
+                                                Label("Voeg toe aan boodschappen", systemImage: "plus.square.fill")
+                                            }
+                                        } label: {
+                                            Image(systemName: "basket.fill")
+                                        }
+                                        .alert(isPresented: $showSuccessMessage) {
+                                            Alert(
+                                                title: Text("Gelukt!"),
+                                                message: Text("Boodschappen toegevoegd")
+                                            
+                                            )
+                                        }
+                                    }
+                                    
+                                    ToolbarItem(placement: .navigationBarTrailing) {
                                         Menu {
                                             Button{
-                                                ReceptEdit = item
+                                                ReceptEdit = recept
                                             } label: {
                                                 Label("Wijzig", systemImage: "pencil")
                                             }
                                             
                                             Button(role: .destructive) {
                                                 withAnimation {
-                                                    context.delete(item)
+                                                    context.delete(recept)
                                                 }
                                             } label: {
                                                 Label("Verwijder", systemImage: "trash.fill")
@@ -57,6 +109,7 @@ struct Boekje: View {
                                             Label("Menu", systemImage: "ellipsis.circle")
                                         }
                                     }
+                                    
                                 }
                         } label: {
                             ZStack {
@@ -66,17 +119,17 @@ struct Boekje: View {
                                 .clipShape(RoundedRectangle(cornerRadius: 12))
                                 .shadow(radius: 5)
                                 
-                                TileView(receptItem: item)
+                                TileView(receptItem: recept)
                                     .contextMenu {
                                         Button{
-                                            ReceptEdit = item
+                                            ReceptEdit = recept
                                         } label: {
                                             Label("Wijzig", systemImage: "pencil")
                                         }
                                                
                                         Button(role: .destructive) {
                                             withAnimation {
-                                                context.delete(item)
+                                                context.delete(recept)
                                             }
                                         } label: {
                                             Label("Verwijder", systemImage: "trash.fill")
@@ -90,7 +143,7 @@ struct Boekje: View {
                 }
                 .padding()
             }
-            
+            .searchable(text: $searchQuery, prompt: "Zoek gerecht of Ingredient")
             .navigationTitle("Receptenboekje")
             .toolbar {
                 ToolbarItem {

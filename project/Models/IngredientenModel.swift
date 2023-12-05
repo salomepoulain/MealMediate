@@ -10,14 +10,22 @@ import SwiftData
 
 @Model
 class IngredientItem {
-    @Attribute(.unique) var naam: String
+    @Attribute(.unique) 
+    var naam: String
     
-    @Relationship var recepten: [ReceptItem]?
+    @Relationship 
+    var recepten: [ReceptItem]?
     
-    @Attribute(.ephemeral) var isChecked = false
+    @Attribute(.ephemeral) 
+    var isChecked = false
     
-    init(naam: String, isChecked: Bool = false) {
+    var isBoodschap: Bool = false
+    var isKlaar: Bool = false
+    
+    init(naam: String, isChecked: Bool = false, isBoodschap: Bool = false, isKlaar: Bool = false) {
         self.naam = naam
         self.isChecked = isChecked
+        self.isBoodschap = isBoodschap
+        self.isKlaar = isKlaar
     }
 }
