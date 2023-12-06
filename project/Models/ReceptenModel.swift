@@ -19,6 +19,8 @@ final class ReceptItem {
     var uitleg: [String]
     var isBoodschap: Bool
     
+    var weekDag: [Int]?
+    
     @Attribute(.externalStorage)
     var image: Data?
         

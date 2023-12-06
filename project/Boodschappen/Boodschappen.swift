@@ -64,11 +64,6 @@ struct Boodschappen: View {
                            }
                        }
                    }
-
-                   
-                   
-                   
-                   
                    
                }
                .toolbar {
@@ -85,7 +80,7 @@ struct Boodschappen: View {
                            }
                            
                        } label: {
-                           Label("Verwijder", systemImage: "trash.fill")
+                           Label("Verwijder alles", systemImage: "trash.fill")
                        }
                    } label: {
                        Label("Menu", systemImage: "ellipsis.circle")

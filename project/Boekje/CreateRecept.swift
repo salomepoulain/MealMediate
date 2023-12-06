@@ -60,11 +60,6 @@ struct CreateRecept: View {
                         .disabled(!(isNameEntered && isImageAdded))
                     }
                 }
-                .toolbar {
-                    ToolbarItem {
-                        
-                    }
-                }
         }
     }
 }

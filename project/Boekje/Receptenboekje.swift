@@ -154,8 +154,6 @@ struct Boekje: View {
             } content: { item in
                 UpdateRecept(recept: item)
             }
-
-            
         }
 
     }
