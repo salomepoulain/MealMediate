@@ -24,7 +24,6 @@ struct Boekje: View {
     ]
     
     @State private var isContextMenuVisible = false
-    @State private var showSuccessMessage = false
     
     @State private var searchQuery = ""
     
@@ -59,50 +58,7 @@ struct Boekje: View {
                     ForEach(filteredRecepten) { recept in
                         NavigationLink {
                             ReceptFinishedView(receptItem: recept)
-                                .toolbar {
-                             
-                                    ToolbarItem(placement: .navigationBarTrailing) {
-                                        Menu {
-                                            Button {
-                                                recept.isBoodschap = true
-                                                showSuccessMessage.toggle()
-                                                                                                
-                                            } label: {
-                                                Label("Voeg toe aan boodschappen", systemImage: "plus.square.fill")
-                                            }
-                                        } label: {
-                                            Image(systemName: "basket.fill")
-                                        }
-                                        .alert(isPresented: $showSuccessMessage) {
-                                            Alert(
-                                                title: Text("Gelukt!"),
-                                                message: Text("Boodschappen toegevoegd")
-                                            
-                                            )
-                                        }
-                                    }
-                                    
-                                    ToolbarItem(placement: .navigationBarTrailing) {
-                                        Menu {
-                                            Button{
-                                                ReceptEdit = recept
-                                            } label: {
-                                                Label("Wijzig", systemImage: "pencil")
-                                            }
-                                            
-                                            Button(role: .destructive) {
-                                                withAnimation {
-                                                    context.delete(recept)
-                                                }
-                                            } label: {
-                                                Label("Verwijder", systemImage: "trash.fill")
-                                            }
-                                        } label: {
-                                            Label("Menu", systemImage: "ellipsis.circle")
-                                        }
-                                    }
-                                    
-                                }
+                                
                         } label: {
                             ZStack {
                                 // Shadow

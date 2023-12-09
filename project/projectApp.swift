@@ -15,7 +15,8 @@ struct projectApp: App {
             ContentView()
                 .modelContainer(for: [
                     ReceptItem.self,
-                    IngredientItem.self
+                    IngredientItem.self,
+                    User.self
                 ])
         }
     }

@@ -29,8 +29,9 @@ struct LijstWeekGerechtView: View {
                 HStack{
                     Text(receptItem.naam)
                         .foregroundColor(Color.primary)
-                        .lineLimit(3)
+                        .lineLimit(2)
                         .truncationMode(.tail)
+                        .multilineTextAlignment(.leading)
                         .bold()
                         .font(.system(size: 15))
                         

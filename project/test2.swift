@@ -8,7 +8,7 @@
 import SwiftUI
 import SwiftData
 
-struct VoegSchemaToe: View {
+struct test2: View {
     
     @Environment(\.dismiss) var dismiss
     @Environment(\.modelContext) var context
@@ -17,11 +17,38 @@ struct VoegSchemaToe: View {
     @State private var isReceptenPickerPresented: [Bool] = Array(repeating: false, count: 7)
     @State private var selectedRecept: [ReceptItem?] = Array(repeating: nil, count: 7)
     
+    @Bindable var user: User
+
+    
     var body: some View {
         NavigationStack {
+            
             List {
+                // Add a Picker to select starting day
+                Picker("Startdag deze week?", selection: $user.startDay) {
+                    ForEach(0..<7) { day in
+                        let today = (Calendar.current.component(.weekday, from: Date()) + 5) % 7
+                        if day == today {
+                            Label(
+                                title: {
+                                    Text("Vandaag")
+                                },
+                                icon: {
+                                    Image(systemName: "pin.fill")
+                                }
+                            )
+                            .tag(day)
+                                .foregroundColor(Color.accentColor)
+                        } else {
+                            Text(dayOfWeek(day)).tag(day)
+                        }
+                        
+                    }
+                }
+                
                 ForEach(0..<7) { day in
-                    Section(header: Text(dayOfWeek(day))) {
+                    let adjustedIndex = (day + user.startDay) % 7
+                    Section(header: Text(dayOfWeek(adjustedIndex))) {
                         if let recept = selectedRecept[day] {
                             LijstWeekGerechtView(receptItem: recept)
                         }
@@ -84,8 +111,4 @@ struct VoegSchemaToe: View {
         default: return ""
         }
     }
-}
-
-#Preview {
-    VoegSchemaToe()
 }

@@ -87,7 +87,7 @@ struct ReceptenPickerView: View {
             }
             .searchable(text: $searchQuery, prompt: "Zoek recept")
             .navigationBarTitleDisplayMode(.inline)
-            .navigationTitle(localSelectedRecept != nil ? "Geselecteerd: \(localSelectedRecept!.naam)" : "Selecteer een gerecht")
+            .navigationTitle(localSelectedRecept != nil ? "\(localSelectedRecept!.naam)" : "Selecteer een gerecht")
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button (action: {

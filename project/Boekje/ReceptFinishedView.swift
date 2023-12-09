@@ -6,10 +6,17 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct ReceptFinishedView: View {
     
+    @Environment(\.modelContext) var context
+    
     @Bindable var receptItem: ReceptItem
+    
+    @State private var showCreate = false
+    @State private var ReceptEdit: ReceptItem?
+    @State private var showSuccessMessage = false
     
     var body: some View {
         NavigationStack {
@@ -138,6 +145,53 @@ struct ReceptFinishedView: View {
                 .frame(width: UIScreen.main.bounds.width*0.9)
             }
             .navigationBarTitle("", displayMode: .inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Menu {
+                        Button {
+                            receptItem.isBoodschap = true
+                            showSuccessMessage.toggle()
+                                                                            
+                        } label: {
+                            Label("Voeg toe aan boodschappen", systemImage: "plus.square.fill")
+                        }
+                    } label: {
+                        Image(systemName: "basket.fill")
+                    }
+                    .alert(isPresented: $showSuccessMessage) {
+                        Alert(
+                            title: Text("Gelukt!"),
+                            message: Text("Boodschappen toegevoegd")
+                        
+                        )
+                    }
+                }
+                
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Menu {
+                        Button{
+                            ReceptEdit = receptItem
+                        } label: {
+                            Label("Wijzig", systemImage: "pencil")
+                        }
+                        
+                        Button(role: .destructive) {
+                            withAnimation {
+                                context.delete(receptItem)
+                            }
+                        } label: {
+                            Label("Verwijder", systemImage: "trash.fill")
+                        }
+                    } label: {
+                        Label("Menu", systemImage: "ellipsis.circle")
+                    }
+                }
+            }
+            .sheet(item: $ReceptEdit) {
+                ReceptEdit = nil
+            } content: { item in
+                UpdateRecept(recept: item)
+            }
         }
     }
 }

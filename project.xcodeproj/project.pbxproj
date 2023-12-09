@@ -26,7 +26,11 @@
 		E385D5752B0E2BF400494866 /* ReceptenModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E385D5742B0E2BF400494866 /* ReceptenModel.swift */; };
 		E385D5772B0E2E3200494866 /* CreateRecept.swift in Sources */ = {isa = PBXBuildFile; fileRef = E385D5762B0E2E3200494866 /* CreateRecept.swift */; };
 		E39DB03A2B1A03DD00EF7A7B /* IngredientenModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E39DB0392B1A03DD00EF7A7B /* IngredientenModel.swift */; };
+		E3A6E4542B23EADB00864994 /* test3.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3A6E4532B23EADB00864994 /* test3.swift */; };
 		E3D995B22B0E9EC100324865 /* TileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3D995B12B0E9EC100324865 /* TileView.swift */; };
+		E3EBF9D62B2135D200F44B20 /* test1.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3EBF9D52B2135D200F44B20 /* test1.swift */; };
+		E3EBF9D82B21362600F44B20 /* test2.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3EBF9D72B21362600F44B20 /* test2.swift */; };
+		E3EBF9DC2B21EE4C00F44B20 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3EBF9DB2B21EE4C00F44B20 /* UserModel.swift */; };
 		E3FA4E0D2B1F4666003D11D2 /* Boodschappen.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3FA4E0C2B1F4666003D11D2 /* Boodschappen.swift */; };
 /* End PBXBuildFile section */
 
@@ -51,7 +55,11 @@
 		E385D5742B0E2BF400494866 /* ReceptenModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceptenModel.swift; sourceTree = "<group>"; };
 		E385D5762B0E2E3200494866 /* CreateRecept.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRecept.swift; sourceTree = "<group>"; };
 		E39DB0392B1A03DD00EF7A7B /* IngredientenModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientenModel.swift; sourceTree = "<group>"; };
+		E3A6E4532B23EADB00864994 /* test3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = test3.swift; sourceTree = "<group>"; };
 		E3D995B12B0E9EC100324865 /* TileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TileView.swift; sourceTree = "<group>"; };
+		E3EBF9D52B2135D200F44B20 /* test1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = test1.swift; sourceTree = "<group>"; };
+		E3EBF9D72B21362600F44B20 /* test2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = test2.swift; sourceTree = "<group>"; };
+		E3EBF9DB2B21EE4C00F44B20 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		E3FA4E0C2B1F4666003D11D2 /* Boodschappen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Boodschappen.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -87,6 +95,9 @@
 			children = (
 				E3163AFD2B0DF69C009CAA9D /* projectApp.swift */,
 				E3163AFF2B0DF69C009CAA9D /* ContentView.swift */,
+				E3EBF9D52B2135D200F44B20 /* test1.swift */,
+				E3EBF9D72B21362600F44B20 /* test2.swift */,
+				E3A6E4532B23EADB00864994 /* test3.swift */,
 				E39DB0382B1A033B00EF7A7B /* Models */,
 				E3163B132B0E23AD009CAA9D /* Home */,
 				E3163B122B0E23A2009CAA9D /* Boekje */,
@@ -159,6 +170,7 @@
 			children = (
 				E385D5742B0E2BF400494866 /* ReceptenModel.swift */,
 				E39DB0392B1A03DD00EF7A7B /* IngredientenModel.swift */,
+				E3EBF9DB2B21EE4C00F44B20 /* UserModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -251,11 +263,14 @@
 				E3163B002B0DF69C009CAA9D /* ContentView.swift in Sources */,
 				E30649E42B17C69700FC2D5E /* UpdateRecept.swift in Sources */,
 				E31307212B1F85380032D43B /* ReceptNavigationlinkView.swift in Sources */,
+				E3EBF9DC2B21EE4C00F44B20 /* UserModel.swift in Sources */,
+				E3EBF9D62B2135D200F44B20 /* test1.swift in Sources */,
 				E39DB03A2B1A03DD00EF7A7B /* IngredientenModel.swift in Sources */,
 				E3163B102B0DFFB4009CAA9D /* Receptenboekje.swift in Sources */,
 				E3818AF02B20CA2000A6E10F /* WeekGerechtView.swift in Sources */,
 				E3818AFA2B2101B800A6E10F /* LijstWeekGerechtView.swift in Sources */,
 				E3163AFE2B0DF69C009CAA9D /* projectApp.swift in Sources */,
+				E3EBF9D82B21362600F44B20 /* test2.swift in Sources */,
 				E30649E62B17CCA300FC2D5E /* ReceptFormView.swift in Sources */,
 				E3818AF62B20EFD000A6E10F /* ReceptenPickerView.swift in Sources */,
 				E385D5752B0E2BF400494866 /* ReceptenModel.swift in Sources */,
@@ -263,6 +278,7 @@
 				E3FA4E0D2B1F4666003D11D2 /* Boodschappen.swift in Sources */,
 				E3818AF42B20DCAB00A6E10F /* VoegSchemaToe.swift in Sources */,
 				E333C9562B1A0C1A004FFEB2 /* IngredientListView.swift in Sources */,
+				E3A6E4542B23EADB00864994 /* test3.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -393,11 +409,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"project/Preview Content\"";
+				DEVELOPMENT_TEAM = R5TKANB9DX;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = MealMediate;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -410,6 +429,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = salome.project;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -421,11 +441,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"project/Preview Content\"";
+				DEVELOPMENT_TEAM = R5TKANB9DX;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = MealMediate;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -438,6 +461,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = salome.project;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

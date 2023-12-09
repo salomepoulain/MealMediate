@@ -22,18 +22,21 @@ struct WeekGerechtView: View {
                     .clipShape(Rectangle())
             }
             
-            VStack(){
+            VStack{
             
-                HStack{
+                HStack {
                     Text(receptItem.naam)
+                        .font(.system(size: 15))
+                        .bold()
                         .foregroundColor(Color.primary)
                         .lineLimit(2)
                         .truncationMode(.tail)
-                        .bold()
-                        .font(.system(size: 15))
-                        
+                        .multilineTextAlignment(.leading)
+                    
                     Spacer()
                 }
+                
+
                 
                 Spacer()
                 
@@ -76,7 +79,6 @@ struct WeekGerechtView: View {
         .background(Color.white)
         .contentShape(.contextMenuPreview, RoundedRectangle(cornerRadius: 12))
         .clipShape(RoundedRectangle(cornerRadius: 12))
-        .shadow(color: Color.gray.opacity(0.5), radius: 5)
     }
 }
 

@@ -31,7 +31,7 @@ struct ContentView: View {
                 Text("Boodschappen")
             }
         
-            HomeView()
+            test1()
             .tabItem {
                 Image(systemName: "info.circle.fill")
                 Text("Gezond")
