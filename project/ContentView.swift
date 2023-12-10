@@ -13,7 +13,7 @@ struct ContentView: View {
     
     var body: some View {
         TabView {
-            HomeView()
+            Home()
             .tabItem {
                 Image(systemName: "house.fill")
                 Text("Home")
@@ -31,7 +31,7 @@ struct ContentView: View {
                 Text("Boodschappen")
             }
         
-            test1()
+            Boodschappen()
             .tabItem {
                 Image(systemName: "info.circle.fill")
                 Text("Gezond")

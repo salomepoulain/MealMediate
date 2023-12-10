@@ -146,45 +146,42 @@ struct ReceptFinishedView: View {
             }
             .navigationBarTitle("", displayMode: .inline)
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Menu {
-                        Button {
+                Menu {
+                    Button {
+                        withAnimation {
                             receptItem.isBoodschap = true
                             showSuccessMessage.toggle()
-                                                                            
-                        } label: {
-                            Label("Voeg toe aan boodschappen", systemImage: "plus.square.fill")
                         }
                     } label: {
-                        Image(systemName: "basket.fill")
+                        Label("Voeg toe aan boodschappen", systemImage: "plus.square.fill")
                     }
-                    .alert(isPresented: $showSuccessMessage) {
-                        Alert(
-                            title: Text("Gelukt!"),
-                            message: Text("Boodschappen toegevoegd")
-                        
-                        )
-                    }
+                } label: {
+                    Image(systemName: "basket.fill")
                 }
+                .alert(isPresented: $showSuccessMessage) {
+                    Alert(
+                        title: Text("Gelukt!"),
+                        message: Text("Boodschappen toegevoegd")
+                    )
+                }
+
                 
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Menu {
-                        Button{
-                            ReceptEdit = receptItem
-                        } label: {
-                            Label("Wijzig", systemImage: "pencil")
-                        }
-                        
-                        Button(role: .destructive) {
-                            withAnimation {
-                                context.delete(receptItem)
-                            }
-                        } label: {
-                            Label("Verwijder", systemImage: "trash.fill")
+                Menu {
+                    Button {
+                        ReceptEdit = receptItem
+                    } label: {
+                        Label("Wijzig recept in boekje", systemImage: "pencil")
+                    }
+
+                    Button(role: .destructive) {
+                        withAnimation {
+                            context.delete(receptItem)
                         }
                     } label: {
-                        Label("Menu", systemImage: "ellipsis.circle")
+                        Label("Verwijder recept uit boekje", systemImage: "trash.fill")
                     }
+                } label: {
+                    Label("Menu", systemImage: "ellipsis.circle")
                 }
             }
             .sheet(item: $ReceptEdit) {
@@ -196,4 +193,3 @@ struct ReceptFinishedView: View {
     }
 }
 
-// #Preview {}

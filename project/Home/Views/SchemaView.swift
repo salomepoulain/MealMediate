@@ -1,21 +1,27 @@
 //
-//  test3.swift
+//  SchemaView.swift
 //  project
 //
-//  Created by Salome Poulain on 09/12/2023.
+//  Created by Salome Poulain on 10/12/2023.
 //
 
 import SwiftUI
 import SwiftData
 
-struct Test3: View {
+struct SchemaView: View {
     
     @Query(filter: #Predicate<ReceptItem> { recept in
            recept.weekDag != nil
        }) private var allRecepten: [ReceptItem]
     
     
+    @State private var showSuccessMessage = false
     @State private var isSheetPresented = false
+    @State private var isAddSheetPresented = false
+    @State private var capturedDayIndex: Int = 0
+
+    
+    @Environment(\.dismiss) var dismiss
     
     @Bindable var user: User
     
@@ -82,9 +88,10 @@ struct Test3: View {
                     if allRecepten.allSatisfy({ recept in
                         recept.weekDag == nil || !recept.weekDag!.contains(vandaag)
                     }) {
-                        Text("None")
+                        Text("Geen gerecht voor vandaag geselecteerd")
                             .foregroundColor(Color.gray)
                             .italic()
+                            .padding(.top, 20)
                             .padding(.bottom, 20)
                     }
                 }
@@ -106,11 +113,13 @@ struct Test3: View {
                                 Spacer()
                             }
                             
-                            ForEach(allRecepten) { recept in
-                                if let weekDag = recept.weekDag, weekDag.contains(dayIndex) {
-                                    NavigationLink {
-                                        ReceptFinishedView(receptItem: recept)
-                                    } label: {
+                            ForEach(allRecepten.filter { recept in
+                                let weekDag = recept.weekDag ?? []
+                                return weekDag.contains(dayIndex)
+                            }) { recept in
+                                NavigationLink(
+                                    destination: ReceptFinishedView(receptItem: recept),
+                                    label: {
                                         WeekGerechtView(receptItem: recept)
                                             .foregroundColor(Color.primary)
                                             .shadow(color: isDayPassed(for: adjustedIndex) ? Color.clear : Color.gray.opacity(0.5), radius: 5)
@@ -122,18 +131,39 @@ struct Test3: View {
                                                     : nil
                                             )
                                             .padding(.bottom, 20)
+                                            .contextMenu {
+                                                Button(role: .destructive) {
+                                                    removeDayIndexFromRecept(recept, dayIndex: dayIndex)
+                                                } label : {
+                                                    Label("verwijder recept \(dayName)", systemImage: "trash.fill")
+                                                }
+                                            }
                                     }
-                                }
+                                )
+                                
                             }
-                            
+
+                            // Display "none" if no recipes for the current day
                             if allRecepten.allSatisfy({ recept in
                                 recept.weekDag == nil || !recept.weekDag!.contains(dayIndex)
                             }) {
-                                Text("None")
-                                    .foregroundColor(Color.gray)
-                                    .italic()
-                                    .padding(.bottom, 20)
+                                Button {
+                                    capturedDayIndex = dayIndex
+                                    isAddSheetPresented.toggle()
+                                } label: {
+                                    Image(systemName: "plus.app.fill")
+                                            .foregroundColor(.white)
+                                            .padding()
+                                            .background(Color.accentColor)
+                                            .cornerRadius(12) // Adjust the corner radius if needed
+                                            .shadow(color: Color.accentColor.opacity(0.5), radius: 3)
+                                }
+                                .sheet(isPresented: $isAddSheetPresented) {
+                                    // Use the captured dayIndex here
+                                    DayReceptPickerView(day: $capturedDayIndex)
+                                }
                             }
+                            
                         }
                     }
                 }
@@ -155,7 +185,7 @@ struct Test3: View {
                             .shadow(color: Color.accentColor.opacity(0.5), radius: 3)
                     }
                     .sheet(isPresented: $isSheetPresented) {
-                        test2(user: user)
+                        VoegSchemaToe(user: user)
                     }
                     
                     Spacer()
@@ -164,8 +194,16 @@ struct Test3: View {
         }
         .frame(width: UIScreen.main.bounds.width*0.9)
 
-        
     }
+    
+    func removeDayIndexFromRecept(_ recept: ReceptItem, dayIndex: Int) {
+        if let weekDag = recept.weekDag, weekDag.count == 1 && weekDag.contains(dayIndex) {
+            recept.weekDag = nil
+        } else if let weekDag = recept.weekDag, let indexToRemove = weekDag.firstIndex(of: dayIndex) {
+            recept.weekDag?.remove(at: indexToRemove)
+        }
+    }
+
     
     func getDayNumber(for index: Int) -> String {
         let today = (Calendar.current.component(.weekday, from: Date()) + 5) % 7
@@ -198,5 +236,3 @@ struct Test3: View {
         return index < today
     }
 }
-
-

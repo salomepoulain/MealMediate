@@ -20,7 +20,7 @@ struct LijstWeekGerechtView: View {
                     .aspectRatio(contentMode: .fill)
                     .frame(width: 130, height: 100)
                     .clipShape(Rectangle())
-                    .cornerRadius(10)
+                    .cornerRadius(8)
                     .padding(.leading, -5)
             }
             
