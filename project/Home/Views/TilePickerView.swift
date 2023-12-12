@@ -1,42 +1,41 @@
 //
-//  WeekGerechtView.swift
+//  TilePickerView.swift
 //  project
 //
-//  Created by Salome Poulain on 06/12/2023.
+//  Created by Salome Poulain on 11/12/2023.
 //
 
 import SwiftUI
 
-struct WeekGerechtView: View {
+struct TilePickerView: View {
     
     @Bindable var receptItem: ReceptItem
     
     var body: some View {
-        HStack {
+        VStack {
+            // Top half: Image
             if let imageData = receptItem.image,
                let uiImage = UIImage(data: imageData) {
                 Image(uiImage: uiImage)
                     .resizable()
                     .aspectRatio(contentMode: .fill)
-                    .frame(width: 130, height: 100)
+                    .frame(width: 170, height: 130)
                     .clipShape(Rectangle())
             }
             
-            VStack{
+            // Bottom half: Info
+            VStack(){
             
-                HStack {
+                HStack{
                     Text(receptItem.naam)
-                        .font(.system(size: 15))
-                        .bold()
                         .foregroundColor(Color.primary)
                         .lineLimit(2)
                         .truncationMode(.tail)
-                        .multilineTextAlignment(.leading)
-                    
+                        .bold()
+                        .font(.system(size: 14))
+                        
                     Spacer()
                 }
-                
-
                 
                 Spacer()
                 
@@ -72,14 +71,12 @@ struct WeekGerechtView: View {
                         .font(.system(size: 14))
                 }
             }
-            .padding(15)
+            .padding([.bottom, .leading, .trailing], 11)
+            .frame(width: 170, height: 80)
         }
-        .frame(height: 100)
-        .frame(width: UIScreen.main.bounds.width*0.9 - 20)
-        .background(Color("Tile"))
+        .frame(width: 170, height: 210)
+        .background(Color("TileLight"))
         .contentShape(.contextMenuPreview, RoundedRectangle(cornerRadius: 12))
         .clipShape(RoundedRectangle(cornerRadius: 12))
     }
 }
-
-

@@ -36,7 +36,7 @@ struct SchemaView: View {
                         Text(getDayAbbreviation(for: adjustedIndex))
                             .font(.caption)
                             .padding(4)
-                            .background(isCurrentDate(for: adjustedIndex) ? Color.white : Color.clear)
+                            .background(isCurrentDate(for: adjustedIndex) ? Color("Tile") : Color.clear)
                             .clipShape(RoundedRectangle(cornerRadius: 10))
                             .foregroundColor(isCurrentDate(for: adjustedIndex) ? Color.accentColor : Color.primary)
                             .padding(2)
@@ -44,7 +44,7 @@ struct SchemaView: View {
                         Text(getDayNumber(for: adjustedIndex))
                             .padding(.top, -4)
                             .padding(.bottom, 6)
-                            .foregroundColor(isCurrentDate(for: adjustedIndex) ? Color.white : Color.primary)
+                            .foregroundColor(isCurrentDate(for: adjustedIndex) ? Color("Tile") : Color.primary)
                     }
                     .background(isCurrentDate(for: adjustedIndex) ? Color.accentColor : Color.clear)
                     .clipShape(RoundedRectangle(cornerRadius: 12))
@@ -78,7 +78,7 @@ struct SchemaView: View {
                                 ReceptFinishedView(receptItem: recept)
                             } label: {
                                 WeekGerechtView(receptItem: recept)
-                                    .shadow(color: Color.gray.opacity(0.5), radius: 5)
+                                    .shadow(color: Color.black.opacity(0.3), radius: 5)
                                     .padding(.bottom, 20)
                                     .foregroundColor(Color.primary)
                             }
@@ -117,29 +117,30 @@ struct SchemaView: View {
                                 let weekDag = recept.weekDag ?? []
                                 return weekDag.contains(dayIndex)
                             }) { recept in
-                                NavigationLink(
-                                    destination: ReceptFinishedView(receptItem: recept),
-                                    label: {
-                                        WeekGerechtView(receptItem: recept)
-                                            .foregroundColor(Color.primary)
-                                            .shadow(color: isDayPassed(for: adjustedIndex) ? Color.clear : Color.gray.opacity(0.5), radius: 5)
-                                            .overlay(
-                                                isDayPassed(for: adjustedIndex) ?
-                                                    RoundedRectangle(cornerRadius: 12)
-                                                        .foregroundColor(Color.gray.opacity(0.3))
-                                                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                                                    : nil
-                                            )
-                                            .padding(.bottom, 20)
-                                            .contextMenu {
-                                                Button(role: .destructive) {
-                                                    removeDayIndexFromRecept(recept, dayIndex: dayIndex)
-                                                } label : {
-                                                    Label("verwijder recept \(dayName)", systemImage: "trash.fill")
-                                                }
+                                NavigationLink {
+                                    ReceptFinishedView(receptItem: recept)
+                                } label: {
+                                    WeekGerechtView(receptItem: recept)
+                                        .foregroundColor(Color.primary)
+                                        .overlay(
+                                            isDayPassed(for: adjustedIndex) ?
+                                                RoundedRectangle(cornerRadius: 12)
+                                                    .foregroundColor(Color("Shadow").opacity(0.6))
+                                                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                                                : nil
+                                        )
+                                        .padding(.bottom, 20)
+                                        .contextMenu {
+                                            Button(role: .destructive) {
+                                                removeDayIndexFromRecept(recept, dayIndex: dayIndex)
+                                            } label : {
+                                                Label("verwijder \(dayName)", systemImage: "trash.fill")
                                             }
-                                    }
-                                )
+                                        }
+                                        .shadow(color: isDayPassed(for: adjustedIndex) ? Color.clear : Color.black.opacity(0.3), radius: 5)
+                                }
+                                .buttonStyle(PlainButtonStyle())
+                                
                                 
                             }
 
@@ -152,11 +153,12 @@ struct SchemaView: View {
                                     isAddSheetPresented.toggle()
                                 } label: {
                                     Image(systemName: "plus.app.fill")
-                                            .foregroundColor(.white)
-                                            .padding()
-                                            .background(Color.accentColor)
-                                            .cornerRadius(12) // Adjust the corner radius if needed
-                                            .shadow(color: Color.accentColor.opacity(0.5), radius: 3)
+                                        .font(.system(size: 23))
+                                        .foregroundColor(.white)
+                                        .padding(10)
+                                        .background(Color.accentColor)
+                                        .cornerRadius(12) // Adjust the corner radius if needed
+                                        .shadow(color: Color.accentColor.opacity(0.5), radius: 3)
                                 }
                                 .sheet(isPresented: $isAddSheetPresented) {
                                     // Use the captured dayIndex here
@@ -190,6 +192,7 @@ struct SchemaView: View {
                     
                     Spacer()
                 }
+                .padding(.top, 70)
             }
         }
         .frame(width: UIScreen.main.bounds.width*0.9)

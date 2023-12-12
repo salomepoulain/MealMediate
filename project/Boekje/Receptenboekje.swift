@@ -60,12 +60,13 @@ struct Boekje: View {
                             ReceptFinishedView(receptItem: recept)
                                 
                         } label: {
-                            ZStack {
+                            // ZStack {
                                 // Shadow
-                                Rectangle()
-                                .frame(width: 170, height: 210)
-                                .clipShape(RoundedRectangle(cornerRadius: 12))
-                                .shadow(radius: 5)
+                                //Rectangle()
+                                //.frame(width: 170, height: 210)
+                                //.background(Color.clear)
+                                //.clipShape(RoundedRectangle(cornerRadius: 12))
+                                //.shadow(color: Color.black.opacity(0.3), radius: 5)
                                 
                                 TileView(receptItem: recept)
                                     .contextMenu {
@@ -83,8 +84,9 @@ struct Boekje: View {
                                             Label("Verwijder", systemImage: "trash.fill")
                                         }
                                     }
+                                    .shadow(color: Color.black.opacity(0.3), radius: 5)
                                     
-                            }
+                            // }
                         }
                         .buttonStyle(PlainButtonStyle())
                     }

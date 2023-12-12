@@ -28,7 +28,7 @@ struct TileView: View {
             
                 HStack{
                     Text(receptItem.naam)
-                        .foregroundColor(.black)
+                        .foregroundColor(Color.primary)
                         .lineLimit(2)
                         .truncationMode(.tail)
                         .bold()
@@ -75,7 +75,7 @@ struct TileView: View {
             .frame(width: 170, height: 80)
         }
         .frame(width: 170, height: 210)
-        .background(Color.white)
+        .background(Color("Tile"))
         .contentShape(.contextMenuPreview, RoundedRectangle(cornerRadius: 12))
         .clipShape(RoundedRectangle(cornerRadius: 12))
     }

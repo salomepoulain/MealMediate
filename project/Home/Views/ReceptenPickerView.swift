@@ -69,7 +69,7 @@ struct ReceptenPickerView: View {
                 LazyVGrid(columns: adaptiveColumns, spacing: 20) {
                     
                     ForEach(filteredRecepten) { recept in
-                        TileView(receptItem: recept)
+                        TilePickerView(receptItem: recept)
                             .onTapGesture {
                                 localSelectedRecept = recept
                             }
