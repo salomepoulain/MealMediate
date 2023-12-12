@@ -50,8 +50,9 @@ struct Home: View {
                             } label: {
                                 Label("Voeg weekschema toe aan boodschappen", systemImage: "plus.square.fill")
                             }
+                            .disabled(allRecepten.contains { $0.isBoodschap })
                         } label: {
-                            Image(systemName: "basket.fill")
+                            Label("Voeg toe aan boodschappen", systemImage: allRecepten.contains { $0.isBoodschap } ? "basket.fill" : "basket")
                         }
                     }
 

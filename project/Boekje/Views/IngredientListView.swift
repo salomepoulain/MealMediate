@@ -16,9 +16,12 @@ struct IngredientListView: View {
     @Query(sort: \IngredientItem.naam, order: .forward) var allIngredienten: [IngredientItem]
     
     @State var IngredientText = ""
-    @State var selectedItems: Int = 0
-    
     @State private var searchQuery = ""
+    @State private var searchedText: String = ""
+
+    
+    @State var tempSelected: [IngredientItem]?
+    @Binding var selectedIngredienten: [IngredientItem]?
     
     var filteredIngredienten: [IngredientItem] {
         
@@ -44,10 +47,10 @@ struct IngredientListView: View {
         NavigationStack {
             List {
                 
-                Section {
-                    DisclosureGroup("Gekozen ingrediënten (\(selectedItems))") {
+                if let selectedIngredients = tempSelected {
+                    DisclosureGroup("Gekozen ingrediënten (\(selectedIngredients.count))") {
                         ForEach(allIngredienten) { ingredient in
-                            if ingredient.isChecked {
+                            if selectedIngredients.contains(where: { $0.id == ingredient.id }) {
                                 HStack {
                                     Text(ingredient.naam)
                                     Spacer()
@@ -57,7 +60,7 @@ struct IngredientListView: View {
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .contentShape(Rectangle())
                                 .onTapGesture {
-                                    ingredient.isChecked.toggle()
+                                    toggleSelectedIngredienten(ingredient)
                                 }
                             }
                         }
@@ -67,20 +70,30 @@ struct IngredientListView: View {
                     
                 
                 Section {
-                    DisclosureGroup("Voeg nieuw ingrediënt toe") {
-                        TextField("Zoals: \"Cherry Tomaten\"", text: $IngredientText, axis: .vertical)
-                        
-                        Button("Voeg toe") {
+                    TextField("Voeg nieuw ingrediënt toe", text: $IngredientText, axis: .vertical)
+                        .onChange(of: searchQuery) {
+                            if filteredIngredienten.isEmpty {
+                                IngredientText = searchQuery
+                            }
+                        }
+
+                    if !IngredientText.isEmpty {
+                        Button {
                             createIngredient()
+                        } label: {
+                            Label("Voeg nieuw ingredient toe..", systemImage: "plus.app.fill")
+                                .foregroundColor(Color.accentColor)
+                                .frame(maxWidth: .infinity, alignment: .center)
                         }
                     }
                 }
+
                 
                 Section(header: Text("Alle ingrediënten")) {
                     ForEach(filteredIngredienten) { ingredient in
                         HStack {
                             Text(ingredient.naam)
-                            if ingredient.isChecked {
+                            if tempSelected?.contains(where: { $0.id == ingredient.id }) == true {
                                 Spacer()
                                 Image(systemName: "checkmark")
                                     .foregroundColor(Color.accentColor)
@@ -89,17 +102,11 @@ struct IngredientListView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .contentShape(Rectangle())
                         .onTapGesture {
-                            ingredient.isChecked.toggle()
-                        }
-                        .onChange(of: ingredient.isChecked) {
-                            selectedItems = allIngredienten.filter { $0.isChecked }.count
+                            toggleSelectedIngredienten(ingredient)
                         }
                     }
                     .onDelete { indexSet in
-                        indexSet.forEach { index in
-                            context.delete(allIngredienten[index])
-                        }
-                        try? context.save()
+                        deleteItems(at: indexSet)
                     }
                 }
             }
@@ -108,7 +115,7 @@ struct IngredientListView: View {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button (action: {
                         allIngredienten.forEach { ingredient in
-                            ingredient.isChecked = false
+                            tempSelected = []
                         }
                         
                         dismiss()
@@ -119,6 +126,7 @@ struct IngredientListView: View {
                 
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: {
+                        selectedIngredienten = tempSelected
                         
                         dismiss()
                         
@@ -128,11 +136,47 @@ struct IngredientListView: View {
                 }
             }
         }
+        .onAppear(perform: {
+            tempSelected = selectedIngredienten
+        })
         
         
     }
     
+    func toggleSelectedIngredienten(_ ingredient: IngredientItem) {
+        if var selectedIngredients = tempSelected {
+            if let index = selectedIngredients.firstIndex(where: { $0.id == ingredient.id }) {
+                // Ingredient is in the array, remove it
+                selectedIngredients.remove(at: index)
+            } else {
+                // Ingredient is not in the array, add it
+                selectedIngredients.append(ingredient)
+            }
+            tempSelected = selectedIngredients
+        } else {
+            // The array is nil, create a new array with the ingredient
+            tempSelected = [ingredient]
+        }
+    }
+    
+    func deleteItems(at indices: IndexSet) {
+        indices.forEach { index in
+            let deletedIngredient = allIngredienten[index]
+            
+            // Remove the item from tempSelected
+            tempSelected?.removeAll { $0.id == deletedIngredient.id }
+            
+            // Remove the item from selectedIngredients
+            selectedIngredienten?.removeAll { $0.id == deletedIngredient.id }
+            
+            context.delete(deletedIngredient)
+        }
+        try? context.save()
+    }
+    
     func createIngredient() {
+        guard !IngredientText.isEmpty else { return }
+
         let ingredient = IngredientItem(naam: IngredientText)
         context.insert(ingredient)
         try? context.save()

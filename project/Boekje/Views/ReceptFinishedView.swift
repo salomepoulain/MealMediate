@@ -87,15 +87,15 @@ struct ReceptFinishedView: View {
                         .padding(15)
                     
                     // ingredienten
-                    Text("Ingrediënten")
-                        .bold()
-                        .padding(.bottom, 10)
-                    
-                    if let ingredients = receptItem.ingredienten {
+                    if let ingredients = receptItem.ingredienten, !ingredients.isEmpty {
+                        
+                        Text("Ingrediënten")
+                            .bold()
+                            .padding(.bottom, 10)
+                        
                         ForEach(ingredients, id: \.self) { item in
                             HStack {
                                 Text("-")
-                                //Image(systemName: "circle")
                                     .foregroundColor(Color.accentColor)
                                     .bold()
                                     .padding(1)
@@ -105,39 +105,57 @@ struct ReceptFinishedView: View {
                                     .padding(1)
                             }
                         }
+                    } else {
+                        Text("Geen ingredienten toegevoegd")
+                            .foregroundColor(Color.gray)
+                            .italic()
+                            .padding(.top, 20)
+                            .padding(.bottom, 20)
+                            .frame(maxWidth: .infinity, alignment: .center) // Center the text
+
                     }
                     
                     Divider()
                         .padding(15)
                     
                     // uitleg
-                    HStack {
-                        Text("Stappen")
-                            .bold()
-                        
-                        Spacer()
-                        
-                        Text("\(receptItem.porties)")
-                            .bold()
-                            .foregroundColor(Color.accentColor)
-                        
-                        Image(systemName: "fork.knife")
-                            .foregroundColor(Color.accentColor)
-                    }
-                    .padding(.bottom, 10)
-                    
-                    ForEach(Array(receptItem.uitleg.enumerated()), id: \.1) { index, item in
+                    if !receptItem.uitleg.isEmpty && receptItem.uitleg != [""] {
                         HStack {
-                            Text("\(index + 1)")
-                                .foregroundColor(.accentColor)
-                                .padding(1)
-                                .padding(.leading, 10)
+                            Text("Stappen")
                                 .bold()
-
-                            Text("\(item)")
-                                .padding(1)
+                            
+                            Spacer()
+                            
+                            Text("\(receptItem.porties)")
+                                .bold()
+                                .foregroundColor(Color.accentColor)
+                            
+                            Image(systemName: "fork.knife")
+                                .foregroundColor(Color.accentColor)
                         }
                         .padding(.bottom, 10)
+                        
+                        ForEach(Array(receptItem.uitleg.enumerated()), id: \.1) { index, item in
+                            HStack {
+                                Text("\(index + 1)")
+                                    .foregroundColor(.accentColor)
+                                    .padding(1)
+                                    .padding(.leading, 10)
+                                    .bold()
+
+                                Text("\(item)")
+                                    .padding(1)
+                            }
+                            .padding(.bottom, 10)
+                        }
+                    } else {
+                        Text("Geen uitleg toegevoegd")
+                            .foregroundColor(Color.gray)
+                            .italic()
+                            .padding(.top, 20)
+                            .padding(.bottom, 20)
+                            .frame(maxWidth: .infinity, alignment: .center) // Center the text
+
                     }
                     
                 }
@@ -146,43 +164,50 @@ struct ReceptFinishedView: View {
             }
             .navigationBarTitle("", displayMode: .inline)
             .toolbar {
-                Menu {
-                    Button {
-                        withAnimation {
-                            receptItem.isBoodschap = true
-                            showSuccessMessage.toggle()
+
+                ToolbarItem {
+                    Menu {
+                        Button {
+                            withAnimation {
+                                receptItem.isBoodschap = true
+                                showSuccessMessage = true
+                            }
+                        } label: {
+                            Label("Voeg toe aan boodschappen", systemImage: "plus.square.fill")
+                        }
+                        .disabled(receptItem.isBoodschap)
+                    } label: {
+                        Label("Voeg toe aan boodschappen", systemImage: receptItem.isBoodschap ? "basket.fill" : "basket")
+                    }
+                }
+                    
+                    
+                ToolbarItem {
+                    Menu {
+                        Button {
+                            ReceptEdit = receptItem
+                        } label: {
+                            Label("Wijzig recept in boekje", systemImage: "pencil")
+                        }
+
+                        Button(role: .destructive) {
+                            withAnimation {
+                                context.delete(receptItem)
+                            }
+                        } label: {
+                            Label("Verwijder recept uit boekje", systemImage: "trash.fill")
                         }
                     } label: {
-                        Label("Voeg toe aan boodschappen", systemImage: "plus.square.fill")
+                        Label("Menu", systemImage: "ellipsis.circle")
                     }
-                } label: {
-                    Image(systemName: "basket.fill")
                 }
-                .alert(isPresented: $showSuccessMessage) {
-                    Alert(
-                        title: Text("Gelukt!"),
-                        message: Text("Boodschappen toegevoegd")
-                    )
-                }
-
                 
-                Menu {
-                    Button {
-                        ReceptEdit = receptItem
-                    } label: {
-                        Label("Wijzig recept in boekje", systemImage: "pencil")
-                    }
-
-                    Button(role: .destructive) {
-                        withAnimation {
-                            context.delete(receptItem)
-                        }
-                    } label: {
-                        Label("Verwijder recept uit boekje", systemImage: "trash.fill")
-                    }
-                } label: {
-                    Label("Menu", systemImage: "ellipsis.circle")
-                }
+            }
+            .alert(isPresented: $showSuccessMessage) {
+                Alert(
+                    title: Text("Gelukt!"),
+                    message: Text("Boodschappen toegevoegd")
+                )
             }
             .sheet(item: $ReceptEdit) {
                 ReceptEdit = nil

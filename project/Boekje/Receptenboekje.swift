@@ -96,12 +96,21 @@ struct Boekje: View {
             .searchable(text: $searchQuery, prompt: "Zoek gerecht")
             .navigationTitle("Receptenboekje")
             .toolbar {
+                
                 ToolbarItem {
-                    Button (action: {
+                    Button {
+                        // showCreate.toggle()
+                    } label: {
+                        Label("Filter", systemImage: "line.3.horizontal.decrease.circle")
+                    }
+                }
+                
+                ToolbarItem {
+                    Button {
                         showCreate.toggle()
-                    }, label: {
+                    } label: {
                         Label("Add Item", systemImage: "plus")
-                    })
+                    }
                 }
             }
             .sheet(isPresented: $showCreate){

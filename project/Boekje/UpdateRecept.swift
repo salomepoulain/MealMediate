@@ -9,47 +9,15 @@ import SwiftUI
 import SwiftData
 struct UpdateRecept: View {
     
-    @Environment(\.dismiss) var dismiss
     @Bindable var recept: ReceptItem
     
-    @Query(sort: \IngredientItem.naam, order: .forward) var allIngredienten: [IngredientItem]
+    @State private var title = "Wijzig"
     
     var body: some View {
         NavigationStack {
-            UpdateReceptFormView(item: recept)
+            ReceptFormView(item: recept, title: $title)
                 .navigationTitle("Wijzig recept")
                 .navigationBarTitleDisplayMode(.inline)
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarLeading) {
-                        Button (action: {
-                            allIngredienten.forEach { ingredient in
-                                ingredient.isChecked = false
-                            }
-                            
-                            dismiss()
-                        }, label: {
-                            Text("Sluit")
-                        })
-                    }
-                    
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        Button (action: {
-                            
-                            var ingredienten = [IngredientItem]()
-                            allIngredienten.forEach { ingredient in
-                                if ingredient.isChecked {
-                                    ingredienten.append(ingredient)
-                                    ingredient.isChecked = false
-                                }
-                            }
-                            recept.ingredienten = ingredienten
-                            
-                            dismiss()
-                        }, label: {
-                            Text("Wijzig")
-                        })
-                    }
-                }
         }
     }
 }

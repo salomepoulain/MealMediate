@@ -13,17 +13,15 @@ class IngredientItem {
     @Attribute(.unique) 
     var naam: String
     
-    @Relationship 
-    var recepten: [ReceptItem]?
-    
-    @Attribute(.ephemeral) 
-    var isChecked = false
-    
     var isKlaar: Bool = false
     
-    init(naam: String, isChecked: Bool = false, isKlaar: Bool = false) {
+    @Relationship
+    var recepten: [ReceptItem]?
+    
+    init(naam: String, isKlaar: Bool = false) {
         self.naam = naam
-        self.isChecked = isChecked
         self.isKlaar = isKlaar
     }
 }
+
+

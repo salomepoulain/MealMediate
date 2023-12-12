@@ -10,56 +10,18 @@ import SwiftData
 
 struct CreateRecept: View {
     
-    @Environment(\.dismiss) var dismiss
     @Environment(\.modelContext) var context
-    
     @State private var recept = ReceptItem()
     
-    @Query(sort: \IngredientItem.naam, order: .forward) var allIngredienten: [IngredientItem]
-    
-    @State private var isNameEntered: Bool = false
-    @State private var isImageAdded: Bool = false
+    @State private var title = "Voeg toe"
     
     var body: some View {
         
         NavigationStack {
-            ReceptListView(item: recept, isNameEntered: $isNameEntered, isImageAdded: $isImageAdded)
+            ReceptFormView(item: recept, title: $title)
                 .navigationTitle("Creëer recept")
                 .navigationBarTitleDisplayMode(.inline)
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarLeading) {
-                        Button (action: {
-                            recept.isBoodschap = false
-                            
-                            dismiss()
-                        }, label: {
-                            Text("Sluit")
-                        })
-                    }
-                    
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        Button(action: {
-                            
-                            var ingredienten = [IngredientItem]()
-                            allIngredienten.forEach { ingredient in
-                                if ingredient.isChecked {
-                                    ingredienten.append(ingredient)
-                                    ingredient.isChecked = false
-                                }
-                            }
-                            recept.ingredienten = ingredienten
-                            
-                            withAnimation {
-                                context.insert(recept)
-                            }
-                            dismiss()
-                        }, label: {
-                            Text("Voeg toe")
-                                .foregroundColor(isImageAdded && isNameEntered ? Color.accentColor : Color.gray)
-                        })
-                        .disabled(!(isNameEntered && isImageAdded))
-                    }
-                }
+                
         }
     }
 }
