@@ -20,7 +20,7 @@ struct ContentView: View {
             }
         
             Boekje()
-            .tabItem {
+                .tabItem {
                 Image(systemName: "book.pages.fill")
                 Text("Recepten")
             }
@@ -31,7 +31,7 @@ struct ContentView: View {
                 Text("Boodschappen")
             }
         
-            Boodschappen()
+            Website()
             .tabItem {
                 Image(systemName: "info.circle.fill")
                 Text("Gezond")

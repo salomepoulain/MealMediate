@@ -10,7 +10,7 @@ import SwiftData
 
 @Model
 class IngredientItem {
-    @Attribute(.unique) 
+    @Attribute(.unique)
     var naam: String
     
     var isKlaar: Bool = false

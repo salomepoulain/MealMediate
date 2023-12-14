@@ -8,15 +8,35 @@
 import SwiftUI
 import SwiftData
 
+enum SortOption: String, CaseIterable, Identifiable {
+    case naam, tijd, lekker, porties
+    
+    var id: SortOption { self }
+    
+    var sortDescriptor: SortDescriptor<ReceptItem> {
+        switch self {
+        case .naam:
+            return SortDescriptor(\ReceptItem.naam)
+        case .tijd:
+            return SortDescriptor(\ReceptItem.tijd)
+        case .lekker:
+            return SortDescriptor(\ReceptItem.lekker)
+        case .porties:
+            return SortDescriptor(\ReceptItem.porties)
+        }
+    }
+}
+
 struct Boekje: View {
     
     @Environment(\.modelContext) var context
     
     @State private var showCreate = false
+    @State private var showFilterSheet = false
+    
     @State private var ReceptEdit: ReceptItem?
     
     @Query private var recepten: [ReceptItem]
-    @Query(sort: \IngredientItem.naam, order: .forward) var allIngredienten: [IngredientItem]
 
     
     private let adaptiveColumns = [
@@ -24,26 +44,47 @@ struct Boekje: View {
     ]
     
     @State private var isContextMenuVisible = false
-    
     @State private var searchQuery = ""
+    
+    @State private var selectedSortOption = SortOption.allCases.first!
+    
+    @State private var isVegaFilter = false
+    @State private var isGezondFilter = false
     
     var filteredRecepten: [ReceptItem] {
         
-        if searchQuery.isEmpty{
-            return recepten
+        if searchQuery.isEmpty && !isVegaFilter && !isGezondFilter {
+            return recepten.sort(on: selectedSortOption)
         }
         
-        let filteredRecepten = recepten.compactMap { item in
-            let naamContainsQuery = item.naam.range(of: searchQuery,
-                                                      options: .caseInsensitive) != nil
+        let filteredRecepten = recepten.filter { item in
+                let naamContainsQuery = item.naam.range(of: searchQuery, options: .caseInsensitive) != nil
+
+                let ingredientNaamContainsQuery = item.ingredienten?.contains(where: { ingredient in
+                    ingredient.naam.range(of: searchQuery, options: .caseInsensitive) != nil
+                }) ?? false
             
-            // let ingredientNaamContainsQuery = item.ingredienten?.naam.range(of: searchQuery, options:
-                                                                               // .caseInsensitive) != nil
+                let isVegaContainsQuery = item.isVega && (searchQuery.lowercased() == "vega" || isVegaFilter)
+                let isGezondContainsQuery = item.isGezond && (searchQuery.lowercased() == "gezond" || isGezondFilter)
             
-            return naamContainsQuery ? item : nil
-        }
-        
-        return filteredRecepten
+                let lekkerContainsQuery: Bool
+                switch searchQuery.lowercased() {
+                case "ok":
+                    lekkerContainsQuery = item.lekker == 1
+                case "lekker":
+                    lekkerContainsQuery = item.lekker == 2
+                case "heerlijk":
+                    lekkerContainsQuery = item.lekker == 3
+                default:
+                    lekkerContainsQuery = false
+                }
+
+                return naamContainsQuery || ingredientNaamContainsQuery || isVegaContainsQuery || isGezondContainsQuery || lekkerContainsQuery
+
+                
+            }
+
+            return filteredRecepten.sort(on: selectedSortOption)
     }
 
     
@@ -51,55 +92,51 @@ struct Boekje: View {
         
         
         NavigationStack {
-        
+            
             ScrollView {
                 LazyVGrid(columns: adaptiveColumns, spacing: 20) {
                     
                     ForEach(filteredRecepten) { recept in
                         NavigationLink {
                             ReceptFinishedView(receptItem: recept)
-                                
+                            
                         } label: {
-                            // ZStack {
-                                // Shadow
-                                //Rectangle()
-                                //.frame(width: 170, height: 210)
-                                //.background(Color.clear)
-                                //.clipShape(RoundedRectangle(cornerRadius: 12))
-                                //.shadow(color: Color.black.opacity(0.3), radius: 5)
-                                
-                                TileView(receptItem: recept)
-                                    .contextMenu {
-                                        Button{
-                                            ReceptEdit = recept
-                                        } label: {
-                                            Label("Wijzig", systemImage: "pencil")
-                                        }
-                                               
-                                        Button(role: .destructive) {
-                                            withAnimation {
-                                                context.delete(recept)
-                                            }
-                                        } label: {
-                                            Label("Verwijder", systemImage: "trash.fill")
-                                        }
+                            TileView(receptItem: recept)
+                                .contextMenu {
+                                    Button{
+                                        ReceptEdit = recept
+                                    } label: {
+                                        Label("Wijzig", systemImage: "pencil")
                                     }
-                                    .shadow(color: Color.black.opacity(0.3), radius: 5)
                                     
-                            // }
+                                    Button(role: .destructive) {
+                                        withAnimation {
+                                            context.delete(recept)
+                                        }
+                                    } label: {
+                                        Label("Verwijder", systemImage: "trash.fill")
+                                    }
+                                }
+                                .shadow(color: Color.black.opacity(0.3), radius: 5)
+                            
                         }
                         .buttonStyle(PlainButtonStyle())
                     }
                 }
                 .padding()
             }
-            .searchable(text: $searchQuery, prompt: "Zoek gerecht")
+            .searchable(text: $searchQuery, prompt: "Zoek op gerecht of ingredient")
+            .overlay {
+                if filteredRecepten.isEmpty {
+                    ContentUnavailableView.search
+                }
+            }
             .navigationTitle("Receptenboekje")
             .toolbar {
                 
                 ToolbarItem {
                     Button {
-                        // showCreate.toggle()
+                        showFilterSheet.toggle()
                     } label: {
                         Label("Filter", systemImage: "line.3.horizontal.decrease.circle")
                     }
@@ -121,12 +158,38 @@ struct Boekje: View {
             } content: { item in
                 UpdateRecept(recept: item)
             }
+            .sheet(isPresented: $showFilterSheet) {
+                List {
+                    Picker("Sort by", selection: $selectedSortOption) {
+                        ForEach(SortOption.allCases, id: \.self) { option in
+                            Text(option.rawValue.capitalized)
+                                .tag(option)
+                        }
+                    }
+
+                    Toggle("Gezond", isOn: $isVegaFilter)
+                    Toggle("Vegetarisch", isOn: $isVegaFilter)
+                    
+                }
+            }
         }
 
     }
 }
 
-
-#Preview {
-    Boekje()
+private extension Array where Element == ReceptItem {
+    
+    func sort(on option: SortOption) -> [ReceptItem] {
+        switch option {
+        case .naam:
+            return self.sorted(by: { $0.naam < $1.naam })
+        case .tijd:
+            return self.sorted(by: { $0.tijd < $1.tijd })
+        case .lekker:
+            return self.sorted(by: { $0.lekker < $1.lekker })
+        case .porties:
+            return self.sorted(by: { $0.porties < $1.porties })
+        }
+    }
 }
+

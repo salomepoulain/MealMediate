@@ -80,7 +80,7 @@ struct Boodschappen: View {
                            }
                            
                        } label: {
-                           Label("Verwijder alles", systemImage: "trash.fill")
+                           Label("Leeg alles", systemImage: "trash.fill")
                        }
                    } label: {
                        Label("Menu", systemImage: "ellipsis.circle")
