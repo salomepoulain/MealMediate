@@ -10,14 +10,13 @@ import SwiftData
 
 @main
 struct projectApp: App {
+    
+    @AppStorage("isFirstTimeLaunch") private var isFirstTimeLaunch: Bool = true
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .modelContainer(for: [
-                    ReceptItem.self,
-                    IngredientItem.self,
-                    User.self
-                ])
+                .modelContainer(ReceptenContainer.create(shouldCreateDefaults: &isFirstTimeLaunch))
         }
     }
 }
