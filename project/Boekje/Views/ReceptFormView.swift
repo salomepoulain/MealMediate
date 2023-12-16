@@ -33,7 +33,8 @@ struct ReceptFormView: View {
                 
                 // Naam
                 Section {
-                    TextField("Naam recept", text: $item.naam, axis: .vertical)
+                    TextField("Naam recept", text: $item.naam)
+                        .lineLimit(1)
                 }
                 
                 // Photo
@@ -168,7 +169,8 @@ struct ReceptFormView: View {
                                 item.uitleg[index] = newValue
                             }
                         ), axis: .vertical)
-                        .lineLimit(2...4)
+                        .lineLimit(2...6)
+                        
                     }
                     .onDelete { indexSet in
                         // Ensure indices are within bounds before removing
@@ -186,9 +188,11 @@ struct ReceptFormView: View {
                             .frame(maxWidth: .infinity, alignment: .center)
                     }
                 }
-
-
-
+                
+                Color(.clear)
+                    .frame(height: 150)
+                    .listRowBackground(EmptyView())
+                
             }
             .toolbar {
                 
@@ -197,7 +201,7 @@ struct ReceptFormView: View {
                         cancelChanges()
                         dismiss()
                     } label: {
-                        Text("Sluit")
+                        Text("Terug")
                     }
                 }
                 

@@ -20,26 +20,29 @@ struct DayReceptPickerView: View {
         GridItem(.adaptive(minimum: 165))
     ]
     
+    @State private var showFilterSheet = false
+    
     @State private var searchQuery = ""
-    @State private var selectedRecept: ReceptItem?
-
-    @Binding var day: Int
+    @State private var sortOrder: SortOption.Order = .ascending
+    
+    @State private var selectedSortOption = SortOption.allCases.first!
+    
+    @State private var isVegaFilter = false
+    @State private var isGezondFilter = false
+    
+    @State private var defaultSortOption: SortOption = .naam
+    @State private var defaultSortOrder: SortOption.Order = .ascending
+    @State private var defaultIsVegaFilter = false
+    @State private var defaultIsGezondFilter = false
     
     var filteredRecepten: [ReceptItem] {
-        
-        if searchQuery.isEmpty{
-            return recepten
-        }
-        
-        let filteredRecepten = recepten.compactMap { item in
-            let naamContainsQuery = item.naam.range(of: searchQuery,
-                                                      options: .caseInsensitive) != nil
-            return naamContainsQuery ? item : nil
-        }
-        
-        return filteredRecepten
+        let sortedRecepten = recepten.sort(on: selectedSortOption)
+        return sortedRecepten.filterRecepten(searchQuery: searchQuery, isVegaFilter: isVegaFilter, isGezondFilter: isGezondFilter)
     }
-
+    
+    
+    @State private var selectedRecept: ReceptItem?
+    @Binding var day: Int
     
     var body: some View {
         
@@ -48,20 +51,33 @@ struct DayReceptPickerView: View {
         
             ScrollView {
                 
-                Button {
-                    if let randomRecept = filteredRecepten.randomElement() {
-                        selectedRecept = randomRecept
+                HStack {
+                    Button {
+                        if let randomRecept = filteredRecepten.randomElement() {
+                            selectedRecept = randomRecept
+                        }
+                    } label: {
+                        Label("Selecteer willekeurig", systemImage: "dice.fill")
+                            .foregroundColor(.white)
+                            .padding()
+                            .background(Color.accentColor)
+                            .cornerRadius(12)
+                            .bold()
+                            .shadow(color: Color.accentColor.opacity(0.5), radius: 3)
                     }
-                } label: {
-                    Label("Selecteer willekeurig", systemImage: "dice.fill")
-                        .foregroundColor(.white)
-                        .padding()
-                        .background(Color.accentColor)
-                        .cornerRadius(12)
-                        .bold()
-                        .shadow(color: Color.accentColor.opacity(0.5), radius: 3)
+                    .padding([.bottom, .top], 20)
+                    
+                    Button {
+                        withAnimation {
+                            showFilterSheet.toggle()
+                        }
+                    } label: {
+                        Label("Filter", systemImage: areFiltersDefault() ? "line.3.horizontal" : "line.3.horizontal.decrease")
+                            .foregroundColor(areFiltersDefault() ? .white : Color.accentColor)
+                            .padding()
+                    }
+                    .padding([.bottom, .top], 20)
                 }
-                .padding([.bottom, .top], 20)
                 
 
                 LazyVGrid(columns: adaptiveColumns, spacing: 20) {
@@ -83,7 +99,7 @@ struct DayReceptPickerView: View {
                 }
                 .padding()
             }
-            .searchable(text: $searchQuery, prompt: "Zoek recept")
+            .searchable(text: $searchQuery, prompt: "Zoek recept of ingrediënt")
             .navigationBarTitleDisplayMode(.inline)
             .navigationTitle(selectedRecept != nil ? "\(selectedRecept!.naam)" : "Selecteer een gerecht")
             .toolbar {
@@ -104,10 +120,54 @@ struct DayReceptPickerView: View {
                     })
                 }
             }
+            .sheet(isPresented: $showFilterSheet) {
+                NavigationStack {
+                    List {
+                        Section("Sorteren") {
+                            Picker("Sorteren op", selection: $selectedSortOption) {
+                                ForEach(SortOption.allCases, id: \.self) { option in
+                                    Text(option.rawValue.capitalized)
+                                        .tag(option)
+                                }
+                            }
+                            Picker("Volgorde", selection: $sortOrder) {
+                                Text("Oplopend").tag(SortOption.Order.ascending)
+                                Text("Aflopend").tag(SortOption.Order.descending)
+                            }
+                        }
+                        Section("filter") {
+                            Toggle("Gezond", isOn: $isGezondFilter)
+                            Toggle("Vegetarisch", isOn: $isVegaFilter)
+                        }
+                        Section {
+                            Button("Reset filters") {
+                                if !areFiltersDefault() {
+                                    // Reset filters to default values
+                                    selectedSortOption = defaultSortOption
+                                    sortOrder = defaultSortOrder
+                                    isVegaFilter = defaultIsVegaFilter
+                                    isGezondFilter = defaultIsGezondFilter
+                                }
+                            }
+                            .frame(maxWidth: .infinity, alignment: .center)
+                            .foregroundColor(areFiltersDefault() ? .gray : .red)
+                            .disabled(areFiltersDefault())
+                        }
+                    }
+                }
+                .presentationDetents([.medium])
+            }
         }
 
     }
-    
+        
+    func areFiltersDefault() -> Bool {
+        return selectedSortOption == defaultSortOption &&
+               sortOrder == defaultSortOrder &&
+               isVegaFilter == defaultIsVegaFilter &&
+               isGezondFilter == defaultIsGezondFilter
+    }
+
     func addWeekDayToSelectedRecept(selectedRecept: Binding<ReceptItem?>, day: Int) {
         print("addWeekDayToSelectedRecept called for day \(day)")
 
@@ -120,7 +180,7 @@ struct DayReceptPickerView: View {
             
             print("Recipe \(recept.naam) updated with weekDag: \(recept.weekDag ?? []) for day \(day).")
         }
-        
-
     }
+        
 }
+

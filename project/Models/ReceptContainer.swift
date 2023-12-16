@@ -29,6 +29,9 @@ actor ReceptenContainer {
                 }
             }
             
+            let newUser = User(id: 1, startDay: 0)
+            container.mainContext.insert(newUser)
+            
             shouldCreateDefaults = false
         }
         return container

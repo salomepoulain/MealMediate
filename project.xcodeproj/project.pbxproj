@@ -21,6 +21,7 @@
 		E32389B52B2B939500CE302C /* ReceptContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E32389B42B2B939500CE302C /* ReceptContainer.swift */; };
 		E32389B72B2B9A8400CE302C /* StandaardIngredienten.json in Resources */ = {isa = PBXBuildFile; fileRef = E32389B62B2B9A8400CE302C /* StandaardIngredienten.json */; };
 		E333C9562B1A0C1A004FFEB2 /* IngredientListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E333C9552B1A0C1A004FFEB2 /* IngredientListView.swift */; };
+		E370B08F2B2DFF18000F7A4E /* SortingExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E370B08E2B2DFF18000F7A4E /* SortingExtension.swift */; };
 		E3818AF02B20CA2000A6E10F /* WeekGerechtView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3818AEF2B20CA2000A6E10F /* WeekGerechtView.swift */; };
 		E3818AF42B20DCAB00A6E10F /* VoegSchemaToe.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3818AF32B20DCAB00A6E10F /* VoegSchemaToe.swift */; };
 		E3818AF62B20EFD000A6E10F /* ReceptenPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3818AF52B20EFCF00A6E10F /* ReceptenPickerView.swift */; };
@@ -53,6 +54,7 @@
 		E32389B42B2B939500CE302C /* ReceptContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceptContainer.swift; sourceTree = "<group>"; };
 		E32389B62B2B9A8400CE302C /* StandaardIngredienten.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = StandaardIngredienten.json; sourceTree = "<group>"; };
 		E333C9552B1A0C1A004FFEB2 /* IngredientListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientListView.swift; sourceTree = "<group>"; };
+		E370B08E2B2DFF18000F7A4E /* SortingExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortingExtension.swift; sourceTree = "<group>"; };
 		E3818AEF2B20CA2000A6E10F /* WeekGerechtView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekGerechtView.swift; sourceTree = "<group>"; };
 		E3818AF32B20DCAB00A6E10F /* VoegSchemaToe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoegSchemaToe.swift; sourceTree = "<group>"; };
 		E3818AF52B20EFCF00A6E10F /* ReceptenPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceptenPickerView.swift; sourceTree = "<group>"; };
@@ -106,19 +108,19 @@
 				E3163B122B0E23A2009CAA9D /* Boekje */,
 				E3163B142B0E23C7009CAA9D /* Boodschappen */,
 				E3E1F88E2B29060F0025C547 /* Website */,
-				E3163B032B0DF69F009CAA9D /* Assets */,
+				E3163B032B0DF69F009CAA9D /* Preview Content */,
 			);
 			path = project;
 			sourceTree = "<group>";
 		};
-		E3163B032B0DF69F009CAA9D /* Assets */ = {
+		E3163B032B0DF69F009CAA9D /* Preview Content */ = {
 			isa = PBXGroup;
 			children = (
 				E32389B62B2B9A8400CE302C /* StandaardIngredienten.json */,
 				E3163B012B0DF69F009CAA9D /* Assets.xcassets */,
 				E3163B042B0DF69F009CAA9D /* Preview Assets.xcassets */,
 			);
-			path = Assets;
+			path = "Preview Content";
 			sourceTree = "<group>";
 		};
 		E3163B122B0E23A2009CAA9D /* Boekje */ = {
@@ -180,6 +182,7 @@
 				E39DB0392B1A03DD00EF7A7B /* IngredientenModel.swift */,
 				E3EBF9DB2B21EE4C00F44B20 /* UserModel.swift */,
 				E32389B22B2B914F00CE302C /* IngredientenJSONDecoder.swift */,
+				E370B08E2B2DFF18000F7A4E /* SortingExtension.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -282,6 +285,7 @@
 				E3163B002B0DF69C009CAA9D /* ContentView.swift in Sources */,
 				E30649E42B17C69700FC2D5E /* UpdateRecept.swift in Sources */,
 				E31307212B1F85380032D43B /* ReceptNavigationlinkView.swift in Sources */,
+				E370B08F2B2DFF18000F7A4E /* SortingExtension.swift in Sources */,
 				E383CA422B25FE7C006F8684 /* SchemaView.swift in Sources */,
 				E3EBF9DC2B21EE4C00F44B20 /* UserModel.swift in Sources */,
 				E39DB03A2B1A03DD00EF7A7B /* IngredientenModel.swift in Sources */,

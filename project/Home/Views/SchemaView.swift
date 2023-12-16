@@ -34,7 +34,7 @@ struct SchemaView: View {
                     let adjustedIndex = dayIndex + user.startDay
                     VStack {
                         Text(getDayAbbreviation(for: adjustedIndex))
-                            .font(.caption)
+                            .font(.system(size: 11))
                             .padding(4)
                             .background(isCurrentDate(for: adjustedIndex) ? Color("Tile") : Color.clear)
                             .clipShape(RoundedRectangle(cornerRadius: 10))

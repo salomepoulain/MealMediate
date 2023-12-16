@@ -17,7 +17,6 @@ struct Home: View {
     @Environment(\.modelContext) var context
     
     @Query private var users: [User]
-
     @State private var showSuccessMessage = false
     
     var body: some View {
@@ -32,12 +31,6 @@ struct Home: View {
             }
             .frame(width: UIScreen.main.bounds.width*0.9)
             .navigationTitle(getFormattedDate())
-            .onAppear {
-                // Check if user with id 1 exists, if not, create a new user
-                if users.first(where: { $0.id == 1 }) == nil {
-                    handleNewUser()
-                }
-            }
             .toolbar {
                 if !allRecepten.isEmpty {
                     ToolbarItem {
@@ -50,9 +43,9 @@ struct Home: View {
                             } label: {
                                 Label("Voeg weekschema toe aan boodschappen", systemImage: "plus.square.fill")
                             }
-                            .disabled(allRecepten.contains { $0.isBoodschap })
+                            .disabled(allRecepten.allSatisfy { $0.isBoodschap })
                         } label: {
-                            Label("Voeg toe aan boodschappen", systemImage: allRecepten.contains { $0.isBoodschap } ? "basket.fill" : "basket")
+                            Label("Voeg toe aan boodschappen", systemImage: allRecepten.allSatisfy { $0.isBoodschap } ? "basket.fill" : "basket")
                         }
                     }
 
@@ -63,7 +56,7 @@ struct Home: View {
                                     recept.weekDag = nil
                                 }
                             } label: {
-                                Label("leeg schema", systemImage: "trash.fill")
+                                Label("Leeg schema", systemImage: "trash.fill")
                             }
                         } label: {
                             Label("Menu", systemImage: "ellipsis.circle")
@@ -79,11 +72,6 @@ struct Home: View {
             }
             
         }
-    }
-    
-    func handleNewUser() {
-        let newUser = User(id: 1, startDay: 0)
-        context.insert(newUser)
     }
     
     func getFormattedDate() -> String {

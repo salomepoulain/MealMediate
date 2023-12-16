@@ -31,32 +31,29 @@ struct VoegSchemaToe: View {
             List {
 
                 // Add a Picker to select starting day
-                Picker("Startdag deze week", selection: $user.startDay) {
-                    ForEach(0..<7) { day in
-                        let today = (Calendar.current.component(.weekday, from: Date()) + 5) % 7
-                        if day == today {
-                            Label(
-                                title: {
-                                    Text("Vandaag")
-                                },
-                                icon: {
-                                    Image(systemName: "pin.fill")
-                                }
-                            )
-                            .tag(day)
-                                .foregroundColor(Color.accentColor)
-                        } else {
-                            Text(dayOfWeek(day)).tag(day)
+                Section {
+                    Picker("Startdag deze week", selection: $user.startDay) {
+                        ForEach(0..<7) { day in
+                            let today = (Calendar.current.component(.weekday, from: Date()) + 5) % 7
+                            if day == today {
+                                Label(
+                                    title: {
+                                        Text("Vandaag")
+                                    },
+                                    icon: {
+                                        Image(systemName: "pin.fill")
+                                    }
+                                )
+                                .tag(day)
+                                    .foregroundColor(Color.accentColor)
+                            } else {
+                                Text(dayOfWeek(day)).tag(day)
+                            }
+                            
                         }
-                        
                     }
-                }
-                
-                // New Stepper for aantal ongezonde dagen
-                Picker("Aantal ongezonde dagen", selection: $numberOfOngezondeDagen) {
-                    ForEach(0..<3) { number in
-                        Text("\(number)")
-                    }
+                    Stepper("Ongezonde dagen: \(numberOfOngezondeDagen)", value: $numberOfOngezondeDagen, in: 0...2)
+                        .padding([.top, .bottom], 5)
                 }
                 
                 Section {

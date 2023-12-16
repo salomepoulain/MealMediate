@@ -9,8 +9,6 @@ import SwiftUI
 
 struct ContentView: View {
     
-    // let appOrange: Color = Color(red: 224/255, green: 132/255, blue: 98/255)
-    
     var body: some View {
         TabView {
             Home()
@@ -37,7 +35,7 @@ struct ContentView: View {
                 Text("Gezond")
             }
         }
-        .tint(.accentColor)
+        .tint(Color("AccentColor"))
     }
 }
 
