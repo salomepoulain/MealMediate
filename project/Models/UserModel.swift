@@ -8,9 +8,14 @@
 import Foundation
 import SwiftData
 
+// MARK: - User
+
 @Model
 class User {
-    @Attribute(.unique) var id: Int
+    
+    @Attribute(.unique)
+    var id: Int
+    
     var startDay: Int
     
     init(id: Int = 1, startDay: Int = 0) {

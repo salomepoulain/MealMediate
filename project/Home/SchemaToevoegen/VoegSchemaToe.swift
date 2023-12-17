@@ -10,6 +10,8 @@ import SwiftData
 
 struct VoegSchemaToe: View {
     
+    // MARK: - Properties
+    
     @Environment(\.dismiss) var dismiss
     @Environment(\.modelContext) var context
     
@@ -22,52 +24,51 @@ struct VoegSchemaToe: View {
     @Query private var allRecepten: [ReceptItem]
     
     @Bindable var user: User
-
+    
+    // MARK: - Body
     
     var body: some View {
         NavigationStack {
-            
-            
             List {
-
-                // Add a Picker to select starting day
+                // Section to select starting day and number of unhealthy days
                 Section {
                     Picker("Startdag deze week", selection: $user.startDay) {
                         ForEach(0..<7) { day in
+                            // Display "Vandaag" label for the current day
                             let today = (Calendar.current.component(.weekday, from: Date()) + 5) % 7
                             if day == today {
-                                Label(
-                                    title: {
-                                        Text("Vandaag")
-                                    },
-                                    icon: {
-                                        Image(systemName: "pin.fill")
-                                    }
-                                )
-                                .tag(day)
+                                Label("Vandaag", systemImage: "pin.fill")
+                                    .tag(day)
                                     .foregroundColor(Color.accentColor)
                             } else {
                                 Text(dayOfWeek(day)).tag(day)
                             }
-                            
                         }
                     }
-                    Stepper("Ongezonde dagen: \(numberOfOngezondeDagen)", value: $numberOfOngezondeDagen, in: 0...2)
-                        .padding([.top, .bottom], 5)
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text("Aantal ongezonde dagen")
+                            .padding(.bottom, 5)
+                        
+                        Picker("", selection: $numberOfOngezondeDagen) {
+                            ForEach(0...2, id: \.self) { day in
+                                Text("\(day)")
+                            }
+                        }
+                        .pickerStyle(SegmentedPickerStyle())
+                    }
+                    .padding([.top, .bottom], 5)
                 }
                 
+                // Section with buttons to fill the schema automatically
                 Section {
-                    Button {
-                        fillAutomatically()
-                    } label: {
+                    Button(action: fillAutomatically) {
                         Label("Vul schema automatisch in", systemImage: "dice.fill")
                             .foregroundColor(.white)
-                            .padding(EdgeInsets(top: 10, leading: 16, bottom: 10, trailing: 16)) // Pas dit aan zoals nodig
+                            .padding(EdgeInsets(top: 10, leading: 16, bottom: 10, trailing: 16))
                             .background(Color.accentColor)
                             .cornerRadius(12)
                             .bold()
                             .frame(maxWidth: .infinity, alignment: .center)
-                            
                     }
                     .buttonStyle(.plain)
                     .listRowBackground(EmptyView())
@@ -75,7 +76,7 @@ struct VoegSchemaToe: View {
                     .shadow(color: Color.accentColor.opacity(0.5), radius: 3)
                 }
                 
-                
+                // Loop through each day of the week to fill in the GerechtView
                 ForEach(0..<7) { day in
                     let adjustedIndex = (day + user.startDay) % 7
                     Section(header: Text(dayOfWeek(adjustedIndex))) {
@@ -83,6 +84,7 @@ struct VoegSchemaToe: View {
                             LijstWeekGerechtView(receptItem: recept)
                         }
                         
+                        // Button to present the recepten picker sheet
                         Button {
                             isReceptenPickerPresented[day].toggle()
                         } label: {
@@ -98,38 +100,38 @@ struct VoegSchemaToe: View {
             .navigationBarTitleDisplayMode(.inline)
             .navigationTitle("Voeg recepten toe")
             .toolbar {
+                // Toolbar items for navigation bar
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button(action: {
                         dismiss()
-                    }, label: {
+                    }) {
                         Text("Sluit")
-                    })
+                    }
+
                 }
                 
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: {
-                        for day in 0..<7 {
-                            addWeekDayToSelectedRecept(selectedRecept: $selectedRecept[day], day: day)
-                        }
+                        addReceptenToWeekSchema()
                         dismiss()
-                    }, label: {
+                    }) {
                         Text("Voeg toe")
-                    })
+                    }
                 }
             }
         }
     }
     
-    func addWeekDayToSelectedRecept(selectedRecept: Binding<ReceptItem?>, day: Int) {
-        if let recept = selectedRecept.wrappedValue {
-            if recept.weekDag == nil {
-                recept.weekDag = [day]
-            } else {
-                recept.weekDag?.append(day)
-            }
+    // MARK: - Helper Functions
+    
+    // Function to add selected recepten to the week schema
+    func addReceptenToWeekSchema() {
+        for day in 0..<7 {
+            addWeekDayToSelectedRecept(selectedRecept: $selectedRecept[day], day: day)
         }
     }
     
+    // Function to get the day of the week as a string
     func dayOfWeek(_ day: Int) -> String {
         switch day {
         case 0: return "Maandag"
@@ -143,6 +145,7 @@ struct VoegSchemaToe: View {
         }
     }
     
+    // Function to get random numbers for unhealthy days
     func getRandomNumbers() -> [Int] {
         var mutableArray = Array(0..<7) // All days
         var selectedNumbers: [Int] = []
@@ -159,7 +162,7 @@ struct VoegSchemaToe: View {
         return selectedNumbers
     }
     
-    // Functie om automatisch recepten in te vullen
+    // Function to fill the schema automatically
     func fillAutomatically() {
         let gezondeRecepten = allRecepten.filter { $0.isGezond }
         let ongezondeRecepten = allRecepten.filter { !$0.isGezond }
@@ -172,7 +175,7 @@ struct VoegSchemaToe: View {
         }
     }
 
-    // Functie om recepten toe te wijzen op basis van willekeurige getallen
+    // Function to assign recepten based on random numbers
     func assignRecepten(randomNumbers: [Int], ongezondeRecepten: [ReceptItem], gezondeRecepten: [ReceptItem]) {
         for day in 0..<7 {
             if randomNumbers.contains(day) {
@@ -183,26 +186,36 @@ struct VoegSchemaToe: View {
         }
     }
 
-    // Functie om willekeurig ongezond recept toe te wijzen aan een dag
+    // Function to assign a random unhealthy recept to a day
     func assignRandomOngezondRecept(day: Int, ongezondeRecepten: [ReceptItem]) {
         if let randomOngezondRecept = ongezondeRecepten.randomElement() {
             selectedRecept[day] = randomOngezondRecept
         }
     }
 
-    // Functie om willekeurig gezond recept toe te wijzen aan een dag
+    // Function to assign a random healthy recept to a day
     func assignRandomGezondRecept(day: Int, gezondeRecepten: [ReceptItem]) {
         if let randomGezondRecept = gezondeRecepten.randomElement() {
             selectedRecept[day] = randomGezondRecept
         }
     }
 
-    // Functie om automatisch in te vullen met willekeurige gezonde recepten
+    // Function to fill the schema with random healthy recepten
     func fillWithRandomRecepten(gezondeRecepten: [ReceptItem]) {
         for day in 0..<7 {
             assignRandomGezondRecept(day: day, gezondeRecepten: gezondeRecepten)
         }
     }
     
+    // Function to add a weekday to the selected recept
+    func addWeekDayToSelectedRecept(selectedRecept: Binding<ReceptItem?>, day: Int) {
+        if let recept = selectedRecept.wrappedValue {
+            if recept.weekDag == nil {
+                recept.weekDag = [day]
+            } else {
+                recept.weekDag?.append(day)
+            }
+        }
+    }
 }
 

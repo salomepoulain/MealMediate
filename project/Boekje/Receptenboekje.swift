@@ -11,53 +11,68 @@ import SwiftData
 
 struct Boekje: View {
     
+    // MARK: - Properties
+    
+    // Injecting the Core Data managed object context
     @Environment(\.modelContext) var context
     
+    // State variables
     @State private var showCreate = false
-    @State private var ReceptEdit: ReceptItem?
+    @State private var receptEdit: ReceptItem?
     
+    // Query to fetch ReceptItems from Core Data
     @Query private var recepten: [ReceptItem]
     
+    // Grid layout configuration
     private let adaptiveColumns = [
         GridItem(.adaptive(minimum: 165))
     ]
     
+    // State variables for filtering
     @State private var showFilterSheet = false
-    
     @State private var searchQuery = ""
-    @State private var sortOrder: SortOption.Order = .ascending
-    
-    @State private var selectedSortOption = SortOption.allCases.first!
-    
-    @State private var isVegaFilter = false
-    @State private var isGezondFilter = false
-    
-    @State private var defaultSortOption: SortOption = .naam
-    @State private var defaultSortOrder: SortOption.Order = .ascending
-    @State private var defaultIsVegaFilter = false
-    @State private var defaultIsGezondFilter = false
-    
+    @StateObject private var filterViewModel = FilterViewModel(
+        defaultSortOption: .naam,
+        defaultSortOrder: .ascending,
+        defaultIsVegaFilter: false,
+        defaultIsGezondFilter: false
+    )
+
+    // Computed property to get filtered ReceptItems
     var filteredRecepten: [ReceptItem] {
-        let sortedRecepten = recepten.sort(on: selectedSortOption)
-        return sortedRecepten.filterRecepten(searchQuery: searchQuery, isVegaFilter: isVegaFilter, isGezondFilter: isGezondFilter)
+        let sortedRecepten = recepten.sort(on: filterViewModel.selectedSortOption, order: filterViewModel.sortOrder)
+        
+        return sortedRecepten.filterRecepten(
+            searchQuery: searchQuery,
+            isVegaFilter: filterViewModel.isVegaFilter,
+            isGezondFilter: filterViewModel.isGezondFilter
+        )
     }
+
+    // MARK: - Body View
 
     var body: some View {
         NavigationStack {
             ScrollView {
                 LazyVGrid(columns: adaptiveColumns, spacing: 20) {
+                    // Displaying each ReceptItem in a TileView
                     ForEach(filteredRecepten) { recept in
                         NavigationLink {
+                            // Navigate to ReceptFinishedView when tapped
                             ReceptFinishedView(receptItem: recept)
                         } label: {
-                            TileView(receptItem: recept)
+                            // TileView to display ReceptItem
+                            TileView(receptItem: recept, backgroundColor: Color("Tile"))
                                 .contextMenu {
-                                    Button{
-                                        ReceptEdit = recept
+                                    // Context menu options for each Tile
+                                    Button {
+                                        // Edit action
+                                        receptEdit = recept
                                     } label: {
                                         Label("Wijzig", systemImage: "pencil")
                                     }
                                     Button(role: .destructive) {
+                                        // Delete action
                                         withAnimation {
                                             context.delete(recept)
                                         }
@@ -76,72 +91,35 @@ struct Boekje: View {
             .navigationTitle("Receptenboekje")
             .toolbar {
                 ToolbarItem {
+                    // Button to toggle the filter sheet
                     Button {
                         showFilterSheet.toggle()
                     } label: {
-                        Image(systemName: areFiltersDefault() ? "line.3.horizontal.decrease.circle" : "line.3.horizontal.decrease.circle.fill")
+                        Image(systemName: filterViewModel.areFiltersDefault ? "line.3.horizontal.decrease.circle" : "line.3.horizontal.decrease.circle.fill")
                     }
                 }
                 
                 ToolbarItem {
+                    // Button to add a new item
                     Button {
                         showCreate.toggle()
                     } label: {
                         Label("Add Item", systemImage: "plus")
                     }
-                    .foregroundColor(Color("AccentColor"))
                 }
             }
             .sheet(isPresented: $showCreate) {
+                // Sheet to create a new ReceptItem
                 CreateRecept()
             }
-            .sheet(item: $ReceptEdit) { item in
+            .sheet(item: $receptEdit) { item in
+                // Sheet to update an existing ReceptItem
                 UpdateRecept(recept: item)
             }
             .sheet(isPresented: $showFilterSheet) {
-                NavigationStack {
-                    List {
-                        Section("Sorteren") {
-                            Picker("Sorteren op", selection: $selectedSortOption) {
-                                ForEach(SortOption.allCases, id: \.self) { option in
-                                    Text(option.rawValue.capitalized)
-                                        .tag(option)
-                                }
-                            }
-                            Picker("Volgorde", selection: $sortOrder) {
-                                Text("Oplopend").tag(SortOption.Order.ascending)
-                                Text("Aflopend").tag(SortOption.Order.descending)
-                            }
-                        }
-                        Section("filter") {
-                            Toggle("Gezond", isOn: $isGezondFilter)
-                            Toggle("Vegetarisch", isOn: $isVegaFilter)
-                        }
-                        Section {
-                            Button("Reset filters") {
-                                if !areFiltersDefault() {
-                                    // Reset filters to default values
-                                    selectedSortOption = defaultSortOption
-                                    sortOrder = defaultSortOrder
-                                    isVegaFilter = defaultIsVegaFilter
-                                    isGezondFilter = defaultIsGezondFilter
-                                }
-                            }
-                            .frame(maxWidth: .infinity, alignment: .center)
-                            .foregroundColor(areFiltersDefault() ? .gray : .red)
-                            .disabled(areFiltersDefault())
-                        }
-                    }
-                }
-                .presentationDetents([.medium])
+                // Sheet to display filter options
+                FilterSheetView(filterViewModel: filterViewModel)
             }
         }
-    }
-    
-    func areFiltersDefault() -> Bool {
-        return selectedSortOption == defaultSortOption &&
-               sortOrder == defaultSortOrder &&
-               isVegaFilter == defaultIsVegaFilter &&
-               isGezondFilter == defaultIsGezondFilter
     }
 }

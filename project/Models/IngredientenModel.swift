@@ -8,8 +8,11 @@
 import Foundation
 import SwiftData
 
+// MARK: - IngredientItem
+
 @Model
 class IngredientItem {
+    
     @Attribute(.unique)
     var naam: String
     
@@ -23,5 +26,3 @@ class IngredientItem {
         self.isKlaar = isKlaar
     }
 }
-
-

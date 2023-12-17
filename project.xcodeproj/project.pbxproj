@@ -10,7 +10,6 @@
 		E30649E42B17C69700FC2D5E /* UpdateRecept.swift in Sources */ = {isa = PBXBuildFile; fileRef = E30649E32B17C69700FC2D5E /* UpdateRecept.swift */; };
 		E30649E62B17CCA300FC2D5E /* ReceptFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E30649E52B17CCA300FC2D5E /* ReceptFormView.swift */; };
 		E30649EA2B17D4C000FC2D5E /* ReceptFinishedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E30649E92B17D4C000FC2D5E /* ReceptFinishedView.swift */; };
-		E31307212B1F85380032D43B /* ReceptNavigationlinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E31307202B1F85380032D43B /* ReceptNavigationlinkView.swift */; };
 		E3163AFE2B0DF69C009CAA9D /* projectApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3163AFD2B0DF69C009CAA9D /* projectApp.swift */; };
 		E3163B002B0DF69C009CAA9D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3163AFF2B0DF69C009CAA9D /* ContentView.swift */; };
 		E3163B022B0DF69F009CAA9D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E3163B012B0DF69F009CAA9D /* Assets.xcassets */; };
@@ -30,10 +29,12 @@
 		E385D5752B0E2BF400494866 /* ReceptenModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E385D5742B0E2BF400494866 /* ReceptenModel.swift */; };
 		E385D5772B0E2E3200494866 /* CreateRecept.swift in Sources */ = {isa = PBXBuildFile; fileRef = E385D5762B0E2E3200494866 /* CreateRecept.swift */; };
 		E39DB03A2B1A03DD00EF7A7B /* IngredientenModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E39DB0392B1A03DD00EF7A7B /* IngredientenModel.swift */; };
-		E3D995B22B0E9EC100324865 /* TileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3D995B12B0E9EC100324865 /* TileView.swift */; };
 		E3E1F8892B2639D70025C547 /* DayReceptPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3E1F8882B2639D70025C547 /* DayReceptPickerView.swift */; };
-		E3E1F88B2B2690870025C547 /* TilePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3E1F88A2B2690870025C547 /* TilePickerView.swift */; };
 		E3E1F88D2B29060B0025C547 /* Website.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3E1F88C2B29060B0025C547 /* Website.swift */; };
+		E3E956E82B2F40C300C390E3 /* SortFilterSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3E956E72B2F40C300C390E3 /* SortFilterSheet.swift */; };
+		E3E956EA2B2F42E600C390E3 /* FilterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3E956E92B2F42E600C390E3 /* FilterViewModel.swift */; };
+		E3E956EE2B2F5E5F00C390E3 /* IndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3E956ED2B2F5E5F00C390E3 /* IndicatorView.swift */; };
+		E3E956F32B2F626F00C390E3 /* TileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3E956F22B2F626F00C390E3 /* TileView.swift */; };
 		E3EBF9DC2B21EE4C00F44B20 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3EBF9DB2B21EE4C00F44B20 /* UserModel.swift */; };
 		E3FA4E0D2B1F4666003D11D2 /* Boodschappen.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3FA4E0C2B1F4666003D11D2 /* Boodschappen.swift */; };
 /* End PBXBuildFile section */
@@ -42,7 +43,6 @@
 		E30649E32B17C69700FC2D5E /* UpdateRecept.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateRecept.swift; sourceTree = "<group>"; };
 		E30649E52B17CCA300FC2D5E /* ReceptFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceptFormView.swift; sourceTree = "<group>"; };
 		E30649E92B17D4C000FC2D5E /* ReceptFinishedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceptFinishedView.swift; sourceTree = "<group>"; };
-		E31307202B1F85380032D43B /* ReceptNavigationlinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceptNavigationlinkView.swift; sourceTree = "<group>"; };
 		E3163AFA2B0DF69C009CAA9D /* project.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = project.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E3163AFD2B0DF69C009CAA9D /* projectApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = projectApp.swift; sourceTree = "<group>"; };
 		E3163AFF2B0DF69C009CAA9D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -63,10 +63,12 @@
 		E385D5742B0E2BF400494866 /* ReceptenModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceptenModel.swift; sourceTree = "<group>"; };
 		E385D5762B0E2E3200494866 /* CreateRecept.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRecept.swift; sourceTree = "<group>"; };
 		E39DB0392B1A03DD00EF7A7B /* IngredientenModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientenModel.swift; sourceTree = "<group>"; };
-		E3D995B12B0E9EC100324865 /* TileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TileView.swift; sourceTree = "<group>"; };
 		E3E1F8882B2639D70025C547 /* DayReceptPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayReceptPickerView.swift; sourceTree = "<group>"; };
-		E3E1F88A2B2690870025C547 /* TilePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TilePickerView.swift; sourceTree = "<group>"; };
 		E3E1F88C2B29060B0025C547 /* Website.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Website.swift; sourceTree = "<group>"; };
+		E3E956E72B2F40C300C390E3 /* SortFilterSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortFilterSheet.swift; sourceTree = "<group>"; };
+		E3E956E92B2F42E600C390E3 /* FilterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewModel.swift; sourceTree = "<group>"; };
+		E3E956ED2B2F5E5F00C390E3 /* IndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndicatorView.swift; sourceTree = "<group>"; };
+		E3E956F22B2F626F00C390E3 /* TileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TileView.swift; sourceTree = "<group>"; };
 		E3EBF9DB2B21EE4C00F44B20 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		E3FA4E0C2B1F4666003D11D2 /* Boodschappen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Boodschappen.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -104,6 +106,7 @@
 				E3163AFD2B0DF69C009CAA9D /* projectApp.swift */,
 				E3163AFF2B0DF69C009CAA9D /* ContentView.swift */,
 				E39DB0382B1A033B00EF7A7B /* Models */,
+				E3E956EB2B2F48C300C390E3 /* Helpers */,
 				E3163B132B0E23AD009CAA9D /* Home */,
 				E3163B122B0E23A2009CAA9D /* Boekje */,
 				E3163B142B0E23C7009CAA9D /* Boodschappen */,
@@ -116,7 +119,6 @@
 		E3163B032B0DF69F009CAA9D /* Preview Content */ = {
 			isa = PBXGroup;
 			children = (
-				E32389B62B2B9A8400CE302C /* StandaardIngredienten.json */,
 				E3163B012B0DF69F009CAA9D /* Assets.xcassets */,
 				E3163B042B0DF69F009CAA9D /* Preview Assets.xcassets */,
 			);
@@ -129,7 +131,8 @@
 				E3163B0F2B0DFFB4009CAA9D /* Receptenboekje.swift */,
 				E385D5762B0E2E3200494866 /* CreateRecept.swift */,
 				E30649E32B17C69700FC2D5E /* UpdateRecept.swift */,
-				E3D995B32B0EA00D00324865 /* Views */,
+				E30649E92B17D4C000FC2D5E /* ReceptFinishedView.swift */,
+				E3D995B32B0EA00D00324865 /* Forms */,
 			);
 			path = Boekje;
 			sourceTree = "<group>";
@@ -138,8 +141,10 @@
 			isa = PBXGroup;
 			children = (
 				E3163B0D2B0DFB99009CAA9D /* Home.swift */,
-				E3818AF32B20DCAB00A6E10F /* VoegSchemaToe.swift */,
-				E3818AF22B20CA3400A6E10F /* Views */,
+				E383CA412B25FE7C006F8684 /* SchemaView.swift */,
+				E3818AEF2B20CA2000A6E10F /* WeekGerechtView.swift */,
+				E3818AF22B20CA3400A6E10F /* SchemaToevoegen */,
+				E3E956EC2B2F593E00C390E3 /* ReceptToevoegen */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -148,30 +153,17 @@
 			isa = PBXGroup;
 			children = (
 				E3FA4E0C2B1F4666003D11D2 /* Boodschappen.swift */,
-				E3818AEE2B20C97600A6E10F /* Views */,
 			);
 			path = Boodschappen;
 			sourceTree = "<group>";
 		};
-		E3818AEE2B20C97600A6E10F /* Views */ = {
+		E3818AF22B20CA3400A6E10F /* SchemaToevoegen */ = {
 			isa = PBXGroup;
 			children = (
-				E31307202B1F85380032D43B /* ReceptNavigationlinkView.swift */,
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
-		E3818AF22B20CA3400A6E10F /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				E383CA412B25FE7C006F8684 /* SchemaView.swift */,
-				E3818AEF2B20CA2000A6E10F /* WeekGerechtView.swift */,
+				E3818AF32B20DCAB00A6E10F /* VoegSchemaToe.swift */,
 				E3818AF92B2101B800A6E10F /* LijstWeekGerechtView.swift */,
-				E3818AF52B20EFCF00A6E10F /* ReceptenPickerView.swift */,
-				E3E1F8882B2639D70025C547 /* DayReceptPickerView.swift */,
-				E3E1F88A2B2690870025C547 /* TilePickerView.swift */,
 			);
-			path = Views;
+			path = SchemaToevoegen;
 			sourceTree = "<group>";
 		};
 		E39DB0382B1A033B00EF7A7B /* Models */ = {
@@ -181,21 +173,17 @@
 				E385D5742B0E2BF400494866 /* ReceptenModel.swift */,
 				E39DB0392B1A03DD00EF7A7B /* IngredientenModel.swift */,
 				E3EBF9DB2B21EE4C00F44B20 /* UserModel.swift */,
-				E32389B22B2B914F00CE302C /* IngredientenJSONDecoder.swift */,
-				E370B08E2B2DFF18000F7A4E /* SortingExtension.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
 		};
-		E3D995B32B0EA00D00324865 /* Views */ = {
+		E3D995B32B0EA00D00324865 /* Forms */ = {
 			isa = PBXGroup;
 			children = (
 				E30649E52B17CCA300FC2D5E /* ReceptFormView.swift */,
 				E333C9552B1A0C1A004FFEB2 /* IngredientListView.swift */,
-				E3D995B12B0E9EC100324865 /* TileView.swift */,
-				E30649E92B17D4C000FC2D5E /* ReceptFinishedView.swift */,
 			);
-			path = Views;
+			path = Forms;
 			sourceTree = "<group>";
 		};
 		E3E1F88E2B29060F0025C547 /* Website */ = {
@@ -204,6 +192,53 @@
 				E3E1F88C2B29060B0025C547 /* Website.swift */,
 			);
 			path = Website;
+			sourceTree = "<group>";
+		};
+		E3E956E52B2F3DFF00C390E3 /* IngredientDecoder */ = {
+			isa = PBXGroup;
+			children = (
+				E32389B22B2B914F00CE302C /* IngredientenJSONDecoder.swift */,
+				E32389B62B2B9A8400CE302C /* StandaardIngredienten.json */,
+			);
+			path = IngredientDecoder;
+			sourceTree = "<group>";
+		};
+		E3E956E62B2F40AF00C390E3 /* SortFilter */ = {
+			isa = PBXGroup;
+			children = (
+				E3E956E72B2F40C300C390E3 /* SortFilterSheet.swift */,
+				E370B08E2B2DFF18000F7A4E /* SortingExtension.swift */,
+				E3E956E92B2F42E600C390E3 /* FilterViewModel.swift */,
+			);
+			path = SortFilter;
+			sourceTree = "<group>";
+		};
+		E3E956EB2B2F48C300C390E3 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				E3E956F12B2F625D00C390E3 /* Views */,
+				E3E956E62B2F40AF00C390E3 /* SortFilter */,
+				E3E956E52B2F3DFF00C390E3 /* IngredientDecoder */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		E3E956EC2B2F593E00C390E3 /* ReceptToevoegen */ = {
+			isa = PBXGroup;
+			children = (
+				E3E1F8882B2639D70025C547 /* DayReceptPickerView.swift */,
+				E3818AF52B20EFCF00A6E10F /* ReceptenPickerView.swift */,
+			);
+			path = ReceptToevoegen;
+			sourceTree = "<group>";
+		};
+		E3E956F12B2F625D00C390E3 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				E3E956ED2B2F5E5F00C390E3 /* IndicatorView.swift */,
+				E3E956F22B2F626F00C390E3 /* TileView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -278,22 +313,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				E385D5772B0E2E3200494866 /* CreateRecept.swift in Sources */,
+				E3E956EE2B2F5E5F00C390E3 /* IndicatorView.swift in Sources */,
 				E30649EA2B17D4C000FC2D5E /* ReceptFinishedView.swift in Sources */,
 				E3E1F88D2B29060B0025C547 /* Website.swift in Sources */,
-				E3D995B22B0E9EC100324865 /* TileView.swift in Sources */,
 				E3E1F8892B2639D70025C547 /* DayReceptPickerView.swift in Sources */,
 				E3163B002B0DF69C009CAA9D /* ContentView.swift in Sources */,
 				E30649E42B17C69700FC2D5E /* UpdateRecept.swift in Sources */,
-				E31307212B1F85380032D43B /* ReceptNavigationlinkView.swift in Sources */,
+				E3E956E82B2F40C300C390E3 /* SortFilterSheet.swift in Sources */,
 				E370B08F2B2DFF18000F7A4E /* SortingExtension.swift in Sources */,
 				E383CA422B25FE7C006F8684 /* SchemaView.swift in Sources */,
 				E3EBF9DC2B21EE4C00F44B20 /* UserModel.swift in Sources */,
 				E39DB03A2B1A03DD00EF7A7B /* IngredientenModel.swift in Sources */,
 				E3163B102B0DFFB4009CAA9D /* Receptenboekje.swift in Sources */,
+				E3E956EA2B2F42E600C390E3 /* FilterViewModel.swift in Sources */,
 				E3818AF02B20CA2000A6E10F /* WeekGerechtView.swift in Sources */,
 				E3818AFA2B2101B800A6E10F /* LijstWeekGerechtView.swift in Sources */,
 				E3163AFE2B0DF69C009CAA9D /* projectApp.swift in Sources */,
-				E3E1F88B2B2690870025C547 /* TilePickerView.swift in Sources */,
 				E32389B52B2B939500CE302C /* ReceptContainer.swift in Sources */,
 				E30649E62B17CCA300FC2D5E /* ReceptFormView.swift in Sources */,
 				E3818AF62B20EFD000A6E10F /* ReceptenPickerView.swift in Sources */,
@@ -302,6 +337,7 @@
 				E32389B32B2B914F00CE302C /* IngredientenJSONDecoder.swift in Sources */,
 				E3FA4E0D2B1F4666003D11D2 /* Boodschappen.swift in Sources */,
 				E3818AF42B20DCAB00A6E10F /* VoegSchemaToe.swift in Sources */,
+				E3E956F32B2F626F00C390E3 /* TileView.swift in Sources */,
 				E333C9562B1A0C1A004FFEB2 /* IngredientListView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

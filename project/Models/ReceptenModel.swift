@@ -8,9 +8,14 @@
 import Foundation
 import SwiftData
 
+// MARK: - ReceptItem
+
 @Model
 final class ReceptItem {
-    @Attribute(.unique) var naam: String
+    
+    @Attribute(.unique)
+    var naam: String
+    
     var isGezond: Bool
     var lekker: Int
     var isVega: Bool
@@ -18,15 +23,15 @@ final class ReceptItem {
     var porties: Int
     var uitleg: [String]
     var isBoodschap: Bool
-    
     var weekDag: [Int]?
     
+    // Make image non-optional
     @Attribute(.externalStorage)
-    var image: Data?
+    var image: Data
     
     @Relationship(deleteRule: .nullify, inverse: \IngredientItem.recepten)
     var ingredienten: [IngredientItem]?
-    
+
     init(
         naam: String = "",
         isGezond: Bool = false,
@@ -37,7 +42,7 @@ final class ReceptItem {
         uitleg: [String] = [""],
         isBoodschap: Bool = false,
         weekDag: [Int]? = nil,
-        image: Data? = nil
+        image: Data = Data()
     ) {
         self.naam = naam
         self.isGezond = isGezond
@@ -52,7 +57,11 @@ final class ReceptItem {
     }
 }
 
+// MARK: - ReceptItem Extension
+
 extension ReceptItem {
+    //Creates a copy of the current `ReceptItem` instance.
+    // Returns: A new instance of `ReceptItem` with the same attribute values.
     func copy() -> ReceptItem {
         return ReceptItem(
             naam: self.naam,
@@ -64,11 +73,7 @@ extension ReceptItem {
             uitleg: self.uitleg,
             isBoodschap: self.isBoodschap,
             weekDag: self.weekDag ?? [],
-            image: self.image ?? Data()
+            image: self.image
         )
     }
 }
-
-
-
-
