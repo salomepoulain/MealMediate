@@ -9,29 +9,19 @@ import SwiftUI
 class FilterViewModel: ObservableObject {
     // MARK: - Published Properties
     
-    // The selected sort option for filtering
     @Published var selectedSortOption: SortOption
-    
-    // The sort order (ascending or descending) for filtering
     @Published var sortOrder: SortOption.Order
-    
-    // The flag to indicate whether the vegetarian filter is applied
     @Published var isVegaFilter: Bool
-    
-    // The flag to indicate whether the healthy filter is applied
     @Published var isGezondFilter: Bool
     
     // MARK: - Default Values
     
-    // Default sort option for resetting filters
     private var defaultSortOption: SortOption
     
     // Default sort order for resetting filters
     private var defaultSortOrder: SortOption.Order
-    
     // Default value for the vegetarian filter for resetting filters
     private var defaultIsVegaFilter: Bool
-    
     // Default value for the healthy filter for resetting filters
     private var defaultIsGezondFilter: Bool
     

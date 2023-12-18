@@ -23,13 +23,9 @@ actor ReceptenContainer {
             User.self
         ])
         
-        // Create a default configuration for the model
         let configuration = ModelConfiguration()
-        
-        // Create the ModelContainer using the defined schema and configuration
         let container = try! ModelContainer(for: schema, configurations: configuration)
         
-        // Check if default data should be created
         if shouldCreateDefaults {
             
             // Decode standard ingredients from a JSON file
@@ -47,11 +43,8 @@ actor ReceptenContainer {
             let newUser = User(id: 1, startDay: 0)
             container.mainContext.insert(newUser)
             
-            // Set shouldCreateDefaults to false to avoid recreating defaults on subsequent launches
             shouldCreateDefaults = false
         }
-        
-        // Return the configured ModelContainer
         return container
     }
 }
