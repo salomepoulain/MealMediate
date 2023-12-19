@@ -110,7 +110,7 @@ struct ReceptenPickerView: View {
                     .onTapGesture {
                         localSelectedRecept = recept
                     }
-                    .shadow(radius: 5)
+                    .shadow(color: Color("Shadow").opacity(0.4), radius: 6)
                     .overlay(
                         RoundedRectangle(cornerRadius: 8)
                             .stroke(localSelectedRecept == recept ? Color.accentColor : Color.clear, lineWidth: 3)

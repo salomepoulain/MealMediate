@@ -73,7 +73,6 @@ struct DayReceptPickerView: View {
             
             // Toolbar
             .toolbar {
-                // Close Button
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button(action: {
                         dismiss()
@@ -111,7 +110,7 @@ struct DayReceptPickerView: View {
                     .onTapGesture {
                         selectedRecept = recept
                     }
-                    .shadow(radius: 5)
+                    .shadow(color: Color("Shadow").opacity(0.4), radius: 6)
                     .overlay(
                         RoundedRectangle(cornerRadius: 8)
                             .stroke(selectedRecept == recept ? Color.accentColor : Color.clear, lineWidth: 3)

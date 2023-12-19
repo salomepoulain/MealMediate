@@ -55,11 +55,9 @@ struct Boodschappen: View {
                 Menu {
                     // Button to clear all items and associated recipes
                     Button(role: .destructive) {
-                        // Loop through all ingredients to reset their state
                         allIngredienten.forEach { ingredient in
                             ingredient.isKlaar = false
                             
-                            // Loop through recipes of the current ingredient to reset their state
                             ingredient.recepten?.forEach { recept in
                                 recept.isBoodschap = false
                             }
@@ -85,7 +83,6 @@ struct IngredientToggleButton: View {
     
     var body: some View {
         Button {
-            // Toggle the state of the ingredient
             ingredient.isKlaar.toggle()
         } label: {
             HStack(spacing: 10) {
@@ -97,7 +94,6 @@ struct IngredientToggleButton: View {
                     .padding([.leading, .trailing], 2)
                     .foregroundColor(ingredient.isKlaar ? .gray : .primary)
                     .overlay(
-                        // Display an overlay if the ingredient is marked as done
                         ingredient.isKlaar ?
                             Rectangle()
                                 .frame(height: 2)

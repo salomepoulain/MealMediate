@@ -47,7 +47,6 @@ struct Home: View {
                         ToolbarItem {
                             Menu {
                                 Button {
-                                    // Set isBoodschap to true for all recepten
                                     allRecepten.forEach { recept in
                                         recept.isBoodschap = true
                                     }
@@ -65,7 +64,6 @@ struct Home: View {
                         ToolbarItem {
                             Menu {
                                 Button(role: .destructive) {
-                                    // Set weekDag to nil for all recepten
                                     allRecepten.forEach { recept in
                                         recept.weekDag = nil
                                     }

@@ -66,13 +66,11 @@ struct Boekje: View {
                                 .contextMenu {
                                     // Context menu options for each Tile
                                     Button {
-                                        // Edit action
                                         receptEdit = recept
                                     } label: {
                                         Label("Wijzig", systemImage: "pencil")
                                     }
                                     Button(role: .destructive) {
-                                        // Delete action
                                         withAnimation {
                                             context.delete(recept)
                                         }
@@ -80,7 +78,7 @@ struct Boekje: View {
                                         Label("Verwijder", systemImage: "trash.fill")
                                     }
                                 }
-                                .shadow(color: Color.black.opacity(0.3), radius: 5)
+                                .shadow(color: Color("Shadow").opacity(0.4), radius: 6)
                         }
                         .buttonStyle(PlainButtonStyle())
                     }
@@ -91,7 +89,6 @@ struct Boekje: View {
             .navigationTitle("Receptenboekje")
             .toolbar {
                 ToolbarItem {
-                    // Button to toggle the filter sheet
                     Button {
                         showFilterSheet.toggle()
                     } label: {
@@ -100,7 +97,6 @@ struct Boekje: View {
                 }
                 
                 ToolbarItem {
-                    // Button to add a new item
                     Button {
                         showCreate.toggle()
                     } label: {
@@ -109,15 +105,12 @@ struct Boekje: View {
                 }
             }
             .sheet(isPresented: $showCreate) {
-                // Sheet to create a new ReceptItem
                 CreateRecept()
             }
             .sheet(item: $receptEdit) { item in
-                // Sheet to update an existing ReceptItem
                 UpdateRecept(recept: item)
             }
             .sheet(isPresented: $showFilterSheet) {
-                // Sheet to display filter options
                 FilterSheetView(filterViewModel: filterViewModel)
             }
         }

@@ -111,12 +111,13 @@ struct DayNumbersRow: View {
 struct DayNumberView: View {
     let dayIndex: Int
     let startDay: Int
-    
+
     var body: some View {
         let adjustedIndex = dayIndex + startDay
+
         VStack {
             Text(getDayAbbreviation(for: adjustedIndex))
-                .font(.system(size: 11))
+                .font(screenSize() == .smallerThaniPhone11 ? .system(size: 10) : .system(size: 12))
                 .padding(4)
                 .background(isCurrentDate(for: adjustedIndex) ? Color("Tile") : Color.clear)
                 .clipShape(RoundedRectangle(cornerRadius: 10))
@@ -133,7 +134,24 @@ struct DayNumberView: View {
         .bold()
         .frame(width: UIScreen.main.bounds.width * 0.9 / 7)
     }
+
+    func screenSize() -> ScreenSize {
+        let screenWidth = UIScreen.main.bounds.width
+
+        if screenWidth <= 375 { // iPhone se width
+            return .smallerThaniPhone11
+        } else {
+            return .largerThanOrEqualToiPhone11
+        }
+    }
+
+    enum ScreenSize {
+        case smallerThaniPhone11
+        case largerThanOrEqualToiPhone11
+    }
 }
+
+
 
 struct VandaagView: View {
     let allRecepten: [ReceptItem]
@@ -157,7 +175,7 @@ struct VandaagView: View {
                         ReceptFinishedView(receptItem: recept)
                     } label: {
                         WeekGerechtView(receptItem: recept)
-                            .shadow(color: Color.black.opacity(0.3), radius: 5)
+                            .shadow(color: Color("Shadow").opacity(0.4), radius: 8)
                             .padding(.bottom, 20)
                             .foregroundColor(Color.primary)
                     }
@@ -224,7 +242,7 @@ struct DayReceptList: View {
                         .overlay(
                             isDayPassed(for: adjustedIndex) ?
                                 RoundedRectangle(cornerRadius: 12)
-                                    .foregroundColor(Color("Shadow").opacity(0.6))
+                                    .foregroundColor(Color("Cover").opacity(0.6))
                                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                                 : nil
                         )
@@ -236,7 +254,7 @@ struct DayReceptList: View {
                                 Label("\(dayName) verwijderen", systemImage: "trash.fill")
                             }
                         }
-                        .shadow(color: isDayPassed(for: adjustedIndex) ? Color.clear : Color.black.opacity(0.3), radius: 5)
+                        .shadow(color: isDayPassed(for: adjustedIndex) ? Color.clear : Color("Shadow").opacity(0.3), radius: 8)
                 }
                 .buttonStyle(PlainButtonStyle())
             }
