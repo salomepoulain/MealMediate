@@ -60,7 +60,7 @@ final class ReceptItem {
 // MARK: - ReceptItem Extension
 
 extension ReceptItem {
-    //Creates a copy of the current `ReceptItem` instance.
+    // Creates a copy of the current `ReceptItem` instance.
     // Returns: A new instance of `ReceptItem` with the same attribute values.
     func copy() -> ReceptItem {
         return ReceptItem(
