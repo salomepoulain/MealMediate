@@ -59,13 +59,19 @@ struct IngredientListView: View {
             List {
                 
                 // Display selected ingredients in a DisclosureGroup
-                if let selectedIngredients = tempSelected {
-                    DisclosureGroup("Gekozen ingrediënten (\(selectedIngredients.count))") {
-                        ForEach(selectedIngredients, id: \.id) { ingredient in
-                            IngredientRowView(ingredient: ingredient) {
-                                toggleSelectedIngredienten(ingredient)
-                            }
+                if let selected = tempSelected {
+                    Section("Gekozen ingrediënten (\(selected.count))") {
+                        ForEach(selected, id: \.id) { ingredient in
+                            IngredientRowView(ingredient: ingredient)
+                                .swipeActions {
+                                    Button(role: .destructive) {
+                                        toggleSelectedIngredienten(ingredient)
+                                    } label: {
+                                        Label("", systemImage: "xmark.circle.fill")
+                                    }
+                                }
                         }
+                        
                     }
                 }
                 
@@ -114,6 +120,18 @@ struct IngredientListView: View {
 
             }
             .toolbar{
+                ToolbarItem(placement: .keyboard) {
+                    HStack {
+                        Spacer()
+
+                        Button(action: {
+                            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                        }) {
+                            Text("Done")
+                        }
+                    }
+                }
+                
                 // Toolbar items for navigation bar
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button (action: {
@@ -216,22 +234,40 @@ struct IngredientListView: View {
 // Struct for displaying an ingredient row
 struct IngredientRowView: View {
     var ingredient: IngredientItem
-    var onTap: () -> Void
+    
+    // State variables for quantity and unit
+    @State private var quantity: String = ""
+    @State private var selectedUnit: String = ""
+    
+    // List of available units
+    let units = ["", "g", "kg", "ml", "l", "tl", "el", "kop"]
 
     var body: some View {
         HStack {
             Text(ingredient.naam)
             Spacer()
-            Image(systemName: "minus")
-                .foregroundColor(Color.accentColor)
+
+            TextField("hoeveel", text: $quantity)
+                .keyboardType(.decimalPad)
+                .frame(width: 80)
+                .multilineTextAlignment(.trailing)
+
+            Picker("", selection: $selectedUnit) {
+                ForEach(units, id: \.self) { unit in
+                    Text(unit)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                }
+            }
+            .frame(width: 70)
+            .pickerStyle(MenuPickerStyle())
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
         .contentShape(Rectangle())
-        .onTapGesture {
-            onTap()
-        }
     }
 }
+
+
+
+
 
 // Struct for the Search and Add section
 struct SearchAndAddView: View {

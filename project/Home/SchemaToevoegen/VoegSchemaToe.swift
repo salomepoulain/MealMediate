@@ -146,7 +146,7 @@ struct VoegSchemaToe: View {
     }
     
     // Function to get random numbers for unhealthy days
-    func getRandomNumbers() -> [Int] {
+    func getRandomUnhealthyDays() -> [Int] {
         var mutableArray = Array(0..<7) // All days
         var selectedNumbers: [Int] = []
         
@@ -164,46 +164,52 @@ struct VoegSchemaToe: View {
     
     // Function to fill the schema automatically
     func fillAutomatically() {
-        let gezondeRecepten = allRecepten.filter { $0.isGezond }
-        let ongezondeRecepten = allRecepten.filter { !$0.isGezond }
+        var gezondeRecepten = allRecepten.filter { $0.isGezond }
+        var ongezondeRecepten = allRecepten.filter { !$0.isGezond }
 
         if !gezondeRecepten.isEmpty && !ongezondeRecepten.isEmpty {
-            let randomNumbers = getRandomNumbers()
-            assignRecepten(randomNumbers: randomNumbers, ongezondeRecepten: ongezondeRecepten, gezondeRecepten: gezondeRecepten)
+            let unhealthyDays = getRandomUnhealthyDays()
+            assignRecepten(unhealthyDays: unhealthyDays, ongezondeRecepten: &ongezondeRecepten, gezondeRecepten: &gezondeRecepten)
         } else {
-            fillWithRandomRecepten(gezondeRecepten: gezondeRecepten)
+            fillWithRandomRecepten(gezondeRecepten: &gezondeRecepten)
         }
     }
 
     // Function to assign recepten based on random numbers
-    func assignRecepten(randomNumbers: [Int], ongezondeRecepten: [ReceptItem], gezondeRecepten: [ReceptItem]) {
+    func assignRecepten(unhealthyDays: [Int], ongezondeRecepten: inout [ReceptItem], gezondeRecepten: inout [ReceptItem]) {
         for day in 0..<7 {
-            if randomNumbers.contains(day) {
-                assignRandomOngezondRecept(day: day, ongezondeRecepten: ongezondeRecepten)
+            if unhealthyDays.contains(day) {
+                assignRandomOngezondRecept(day: day, ongezondeRecepten: &ongezondeRecepten)
             } else {
-                assignRandomGezondRecept(day: day, gezondeRecepten: gezondeRecepten)
+                assignRandomGezondRecept(day: day, gezondeRecepten: &gezondeRecepten)
             }
         }
     }
 
     // Function to assign a random unhealthy recept to a day
-    func assignRandomOngezondRecept(day: Int, ongezondeRecepten: [ReceptItem]) {
-        if let randomOngezondRecept = ongezondeRecepten.randomElement() {
-            selectedRecept[day] = randomOngezondRecept
+    func assignRandomOngezondRecept(day: Int, ongezondeRecepten: inout [ReceptItem]) {
+        guard let index = ongezondeRecepten.indices.randomElement() else {
+            return // Return if the array is empty
         }
+        
+        let randomOngezondRecept = ongezondeRecepten.remove(at: index)
+        selectedRecept[day] = randomOngezondRecept
     }
 
     // Function to assign a random healthy recept to a day
-    func assignRandomGezondRecept(day: Int, gezondeRecepten: [ReceptItem]) {
-        if let randomGezondRecept = gezondeRecepten.randomElement() {
-            selectedRecept[day] = randomGezondRecept
+    func assignRandomGezondRecept(day: Int, gezondeRecepten: inout [ReceptItem]) {
+        guard let index = gezondeRecepten.indices.randomElement() else {
+            return // Return if the array is empty
         }
+        
+        let randomGezondRecept = gezondeRecepten.remove(at: index)
+        selectedRecept[day] = randomGezondRecept
     }
 
     // Function to fill the schema with random healthy recepten
-    func fillWithRandomRecepten(gezondeRecepten: [ReceptItem]) {
+    func fillWithRandomRecepten(gezondeRecepten: inout [ReceptItem]) {
         for day in 0..<7 {
-            assignRandomGezondRecept(day: day, gezondeRecepten: gezondeRecepten)
+            assignRandomGezondRecept(day: day, gezondeRecepten: &gezondeRecepten)
         }
     }
     

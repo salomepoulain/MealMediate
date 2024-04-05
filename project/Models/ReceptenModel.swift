@@ -25,7 +25,6 @@ final class ReceptItem {
     var isBoodschap: Bool
     var weekDag: [Int]?
     
-    // Make image non-optional
     @Attribute(.externalStorage)
     var image: Data
     

@@ -14,8 +14,9 @@ import SwiftData
 class IngredientItem {
     
     @Attribute(.unique)
-    var naam: String
+    var id: UUID = UUID()
     
+    var naam: String
     var isKlaar: Bool = false
     
     @Relationship
@@ -24,5 +25,11 @@ class IngredientItem {
     init(naam: String, isKlaar: Bool = false) {
         self.naam = naam
         self.isKlaar = isKlaar
+    }
+}
+
+extension IngredientItem: Identifiable {
+    var identity: String {
+        return naam
     }
 }

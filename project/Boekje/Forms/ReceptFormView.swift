@@ -20,8 +20,8 @@ struct ReceptFormView: View {
     @Bindable var item: ReceptItem
     @State private var originalItem: ReceptItem?
     
-    // Query for fetching ingredients sorted by name
-    @Query(sort: \IngredientItem.naam, order: .forward) var ingredienten: [IngredientItem]
+    // Query for fetching ingredient
+    @Query var ingredienten: [IngredientItem]
     
     // State properties
     @State private var selectedIngredienten: [IngredientItem]?
@@ -68,6 +68,18 @@ struct ReceptFormView: View {
             }
             // Toolbar items for navigation bar
             .toolbar {
+                // Keyboard
+                ToolbarItem(placement: .keyboard) {
+                    HStack {
+                        Spacer()
+
+                        Button(action: {
+                            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                        }) {
+                            Text("Done")
+                        }
+                    }
+                }
                 
                 // Cancel Button
                 ToolbarItem(placement: .navigationBarLeading) {
@@ -176,21 +188,19 @@ struct ReceptFormView: View {
     // Ingredienten Section
     private var ingredientenSection: some View {
         Section {
-            if let selectedIngredients = selectedIngredienten, !selectedIngredients.isEmpty {
-                DisclosureGroup("Gekozen ingrediënten (\(selectedIngredients.count))") {
-                    ForEach(ingredienten) { ingredient in
-                        if selectedIngredients.contains(where: { $0.id == ingredient.id }) {
-                            HStack {
-                                Text(ingredient.naam)
-                                Spacer()
-                                Image(systemName: "minus")
-                                    .foregroundColor(Color.accentColor)
-                            }
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .contentShape(Rectangle())
-                            .onTapGesture {
-                                removeIngredient(ingredient)
-                            }
+            if let selected = selectedIngredienten, !selected.isEmpty {
+                DisclosureGroup("Gekozen ingrediënten (\(selected.count))") {
+                    ForEach(selected, id: \.id) { ingredient in
+                        HStack {
+                            Text(ingredient.naam)
+                            Spacer()
+                            Image(systemName: "minus")
+                                .foregroundColor(Color.accentColor)
+                        }
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .contentShape(Rectangle())
+                        .onTapGesture {
+                            removeIngredient(ingredient)
                         }
                     }
                 }
@@ -269,11 +279,25 @@ struct ReceptFormView: View {
 
     // Save changes to the context
     private func saveChanges() {
-        if !item.naam.isEmpty, !item.image.isEmpty {
-            item.ingredienten = selectedIngredienten
-            withAnimation {
-                context.insert(item)
+        guard !item.naam.isEmpty, !item.image.isEmpty else {
+            // Item cannot be saved if name or image is empty
+            return
+        }
+
+        if let selected = selectedIngredienten {
+            let orderedIngredients = selected.enumerated().sorted { $0.offset < $1.offset }.map { $0.element }
+            item.ingredienten = orderedIngredients
+
+            print("Order of item.ingredienten:")
+            for (index, ingredient) in (item.ingredienten ?? []).enumerated() {
+                print("\(index + 1). \(ingredient.naam)")
             }
+        }
+
+
+        // Save changes to the context with animation
+        withAnimation {
+            context.insert(item)
         }
     }
 

@@ -98,9 +98,7 @@ struct ReceptFinishedView: View {
                         }
 
                         Button(role: .destructive) {
-                            withAnimation {
-                                context.delete(receptItem)
-                            }
+                            context.delete(receptItem)
                             dismiss()
                         } label: {
                             Label("Verwijder recept uit boekje", systemImage: "trash.fill")
